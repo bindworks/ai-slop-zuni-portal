@@ -118,3 +118,12 @@
 *::-webkit-scrollbar-thumb:hover {
   background: oklch(0.50 0.14 264);
 }
+
+/* Utility to hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

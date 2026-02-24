@@ -102,18 +102,25 @@ export function PatientPanel({
             Wounds ({patient.wounds?.length || 0})
           </p>
           <div className="flex flex-col">
-            {patient.wounds?.map((wound) => (
-              <PanelListItem
-                key={wound.id}
-                id={wound.id}
-                label={wound.label}
-                subtitle={wound.type}
-                status={wound.status}
-                meta={`${wound.imageCount} images | Since ${wound.date}`}
-                selected={selectedItem === wound.id}
-                onSelect={onSelectItem}
-              />
-            ))}
+            {[...(patient.wounds || [])]
+              .sort((a, b) => {
+                if (a.status === "Healed" && b.status !== "Healed") return 1
+                if (b.status === "Healed" && a.status !== "Healed") return -1
+                return 0
+              })
+              .map((wound) => (
+                <PanelListItem
+                  key={wound.id}
+                  id={wound.id}
+                  label={wound.label}
+                  subtitle={wound.type}
+                  status={wound.status}
+                  meta={`${wound.imageCount} images | Since ${wound.date}`}
+                  selected={selectedItem === wound.id}
+                  onSelect={onSelectItem}
+                  isHealed={wound.status === "Healed"}
+                />
+              ))}
           </div>
         </div>
 

@@ -28,7 +28,7 @@ export function DocumentRow({ doc, onPreview }: { doc: Document, onPreview?: () 
             </button>
 
             {/* Metadata */}
-            <div className="flex w-40 shrink-0 flex-col justify-center gap-1.5">
+            <div className="flex w-40 shrink-0 flex-col pt-1 gap-1.5">
                 <h3 className="text-sm font-semibold text-foreground leading-tight">{doc.title}</h3>
                 <p className="text-xs text-muted-foreground">{doc.category}</p>
                 <div className="flex flex-col gap-0.5 text-[11px] text-muted-foreground">
@@ -44,7 +44,7 @@ export function DocumentRow({ doc, onPreview }: { doc: Document, onPreview?: () 
             </div>
 
             {/* Summary */}
-            <div className="flex min-w-0 flex-1 flex-col justify-center">
+            <div className="flex min-w-0 flex-1 flex-col pt-1">
                 <p
                     className={cn(
                         "text-[13px] leading-relaxed text-muted-foreground transition-all",

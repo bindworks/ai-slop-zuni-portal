@@ -97,6 +97,29 @@ function generateWoundHistory(patientId: string, woundIndex: number, rng: Seeded
         const granulation = Math.floor(60 + i * 5);
         const slough = 100 - granulation;
 
+        const assessment = rng.pick([
+            `Wound bed assessment: ${granulation}% granulation, ${slough}% slough. `,
+            `Visual inspection shows improving granulation (${granulation}%) with decreasing slough. `,
+            `Wound margins are intact. Bed is predominantly granulation tissue (${granulation}%). `
+        ]);
+        const cleaning = rng.pick([
+            `Irrigated extensively with normal saline. Gentle mechanical debridement performed using sterile gauze to remove loose slough and debris. `,
+            `Wound cleansed with PHMB solution. Autolytic debridement ongoing. Removed devitalized tissue carefully from edges. `,
+            `Cleansed with warm saline irrigation. Exudate gently wiped from surrounding skin. `,
+            `Washed with hypochlorous acid wound cleanser. No sharp debridement required today. `
+        ]);
+        const dressing = rng.pick([
+            `Applied primary alginate dressing to manage moderate exudate, covered with an absorbent foam pad, and secured with a 2-layer compression system. `,
+            `Primary hydrocolloid dressing applied directly to the wound bed. Secured edges with transparent film to prevent edge rolling. `,
+            `Packed wound loosely with silver-impregnated ribbon gauze. Covered with silicone foam secondary dressing. `,
+            `Applied barrier cream to periwound skin to prevent maceration. Dressed with a non-adherent contact layer and absorbent composite dressing. `
+        ]);
+        const tolerance = rng.pick([
+            `Patient tolerated the procedure well with minimal reported discomfort. Instructed to keep dressing dry and intact. `,
+            `Patient reported mild pain (3/10) during cleansing, relieved promptly after dressing application. Follow-up scheduled as planned. `,
+            `Procedure completed without incident. Patient and family educated on signs of infection to monitor at home. `
+        ]);
+
         history.push({
             date: dateStr,
             label: `${woundType} at ${woundLocation}`,
@@ -119,7 +142,7 @@ function generateWoundHistory(patientId: string, woundIndex: number, rng: Seeded
                         { label: "Slough", value: slough, color: "yellow" }
                     ]
                 },
-                clinicalNotes: `Patient ${patientId} follow-up for ${woundType}. Wound bed appears stable. Current management: compression and foam dressing.`,
+                clinicalNotes: `Patient ${patientId} follow-up for ${woundType}. ${assessment}${cleaning}${dressing}${tolerance}`,
                 doctor: rng.pick(doctors),
                 time: `${rng.nextInt(8, 16)}:00`,
                 camera: rng.pick(cameras),
@@ -168,10 +191,12 @@ function generateMockPatients(count: number): Patient[] {
         const gender = rng.pick(["Male", "Female"]);
         const status = rng.pick(["Improving", "Stable", "Worsening"]) as "Improving" | "Stable" | "Worsening";
         const woundsCount = rng.nextInt(1, 3);
+        const healedCount = rng.nextInt(1, 2);
 
         const wounds = [];
         const pRng = new SeededRandom(parseInt(id.replace("PAT-", "")) || 12345);
 
+        // Generate active wounds
         for (let w = 1; w <= woundsCount; w++) {
             const history = generateWoundHistory(id, w, pRng);
             const totalImages = history.reduce((acc, visit) => acc + visit.images.length, 0);
@@ -184,6 +209,40 @@ function generateMockPatients(count: number): Patient[] {
                 label: woundType,
                 type: woundLocation,
                 status: pRng.pick(["Improving", "Stable", "Worsening"]),
+                date: oldestDate,
+                imageCount: totalImages,
+                history: history
+            });
+        }
+
+        // Generate healed wounds
+        for (let w = 1; w <= healedCount; w++) {
+            const wId = woundsCount + w;
+            const history = generateWoundHistory(id, wId, pRng);
+            const totalImages = history.reduce((acc, visit) => acc + visit.images.length, 0);
+            const woundType = history[0]?.details?.diagnosis?.Diagnosis || "Wound";
+            const woundLocation = history[0]?.details?.diagnosis?.Location || "Unknown Location";
+            const oldestDate = history[history.length - 1]?.date || "2025-11-20";
+
+            // Force healed state
+            history[0].summary = "Wound is completely epithelized and closed.";
+            history[0].details.measurements.length = "0.0";
+            history[0].details.measurements.width = "0.0";
+            history[0].details.measurements.depth = "0.0";
+            history[0].details.measurements.area = "0.0";
+            history[0].details.measurements.tissues = [
+                { label: "Epithelial", value: 100, color: "pink" }
+            ];
+            history[0].details.clinicalNotes = `Patient ${id} follow-up for ${woundType}. Wound is completely healed and closed. No further dressings required. Discharged from active wound care.`;
+            history[0].details.woundState["Wound Bed"] = "100% Epithelialized";
+            history[0].details.woundState["Exudate"] = "None";
+            history[0].details.woundState["Color"] = "Pink";
+
+            wounds.push({
+                id: `W-00${wId}`,
+                label: woundType,
+                type: woundLocation,
+                status: "Healed",
                 date: oldestDate,
                 imageCount: totalImages,
                 history: history

@@ -115,7 +115,7 @@ export function VisitColumn({
             </div>
 
             {/* Scrollable area */}
-            <div className="flex-1 overflow-y-auto" ref={scrollRef} onScroll={onSyncScroll} onPointerEnter={onPointerEnterScroll}>
+            <div className={cn("flex-1 overflow-y-auto", !isCurrent && "scrollbar-hide")} ref={scrollRef} onScroll={onSyncScroll} onPointerEnter={onPointerEnterScroll}>
 
                 {/* Measurements section */}
                 <DetailSection label="Measurements">
@@ -133,7 +133,7 @@ export function VisitColumn({
                         onClick={onToggleNotes}
                     >
                         <p className={cn(
-                            "text-[13px] leading-relaxed text-foreground",
+                            "text-xs leading-relaxed text-foreground",
                             !notesExpanded && "line-clamp-5 h-[6.5rem]"
                         )}>
                             {visit.details.clinicalNotes}
@@ -153,9 +153,9 @@ export function VisitColumn({
                 {/* Wound State Assessment */}
                 <DetailSection label="Wound State">
                     <div className="flex flex-col gap-1">
-                        {WOUND_STATE_KEYS.map((k) => {
+                        {WOUND_STATE_KEYS.map((k, index) => {
                             const v = visit.details.woundState[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} even={index % 2 === 0} />
                         })}
                     </div>
                 </DetailSection>
@@ -163,9 +163,9 @@ export function VisitColumn({
                 {/* Diagnosis & Treatment */}
                 <DetailSection label="Diagnosis & Treatment">
                     <div className="flex flex-col gap-1">
-                        {DIAGNOSIS_KEYS.map((k) => {
+                        {DIAGNOSIS_KEYS.map((k, index) => {
                             const v = visit.details.diagnosis[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} even={index % 2 === 0} />
                         })}
                     </div>
                 </DetailSection>
@@ -173,9 +173,9 @@ export function VisitColumn({
                 {/* Materials Used */}
                 <DetailSection label="Materials Used" last>
                     <div className="flex flex-col gap-1">
-                        {MATERIAL_KEYS.map((k) => {
+                        {MATERIAL_KEYS.map((k, index) => {
                             const v = visit.details.materials[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} even={index % 2 === 0} />
                         })}
                     </div>
                 </DetailSection>

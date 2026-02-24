@@ -10,6 +10,7 @@ export function PanelListItem({
     meta,
     selected,
     onSelect,
+    isHealed,
 }: {
     id: string
     icon?: string
@@ -19,6 +20,7 @@ export function PanelListItem({
     meta?: string
     selected: boolean
     onSelect: (id: string) => void
+    isHealed?: boolean
 }) {
     return (
         <div className="relative">
@@ -26,6 +28,7 @@ export function PanelListItem({
                 onClick={() => onSelect(id)}
                 className={cn(
                     "w-full rounded-lg px-3 py-2 text-left transition-all duration-200",
+                    isHealed && "opacity-50 grayscale",
                     selected
                         ? "bg-accent ring-1 ring-primary/30 rounded-r-none border-r-2 border-r-primary"
                         : "hover:bg-secondary"
