@@ -1,14 +1,14 @@
 "use client"
 
-import { VisitColumn, currentVisit } from "./image-gallery"
+import { VisitColumn } from "../wound-history-gallery/visit-column"
+import { currentVisit } from "@/lib/mock-data"
 
 export function DetailPanel({
   selectedImage,
   onSelectImage,
-  selectedWound,
 }: {
-  selectedImage: number | null
-  onSelectImage: (id: number) => void
+  selectedImage: number | string | null
+  onSelectImage: (id: number | string) => void
   selectedWound: string | null
   images?: unknown[]
 }) {
