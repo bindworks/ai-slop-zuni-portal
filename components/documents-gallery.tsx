@@ -1,0 +1,354 @@
+"use client"
+
+import { useState } from "react"
+import { Calendar, Camera, ChevronDown, ChevronUp } from "lucide-react"
+import { cn } from "@/lib/utils"
+import Image from "next/image"
+
+/* ── Scan image mapping helper ── */
+const scanImages = [
+    "/doc-scan-clinical.png",
+    "/doc-scan-lab.png",
+    "/doc-scan-radiology.png",
+    "/doc-scan-consent.png",
+    "/doc-scan-letter.png",
+]
+
+/* ── Mock data ── */
+
+const documents = [
+    {
+        id: "DOC-001",
+        title: "Wound Assessment Report",
+        category: "Clinical Summary",
+        dateIssued: "2026-02-10",
+        datePhoto: "2026-02-10",
+        thumbnail: scanImages[0],
+        summary:
+            "Comprehensive wound assessment documenting a venous ulcer on the left lower leg. The wound measures 3.2 × 2.1 cm with a depth of 0.4 cm. The wound bed shows 80% granulation tissue with mild serous exudate. Periwound skin is intact with no maceration. Compression therapy is ongoing and well-tolerated. Recommend continuation of current care plan with weekly re-evaluation. Patient reports decreasing pain levels over the past two weeks.",
+    },
+    {
+        id: "DOC-002",
+        title: "Lab Results — CBC Panel",
+        category: "Hematology",
+        dateIssued: "2026-01-28",
+        datePhoto: "2026-01-28",
+        thumbnail: scanImages[1],
+        summary:
+            "Complete blood count within normal limits. WBC 7.2, RBC 4.5, Hemoglobin 13.8, Hematocrit 41.2%, Platelets 245. No signs of infection or anemia. CRP slightly elevated at 8.4 mg/L, suggesting mild systemic inflammation consistent with chronic wound. ESR 22 mm/hr. Recommend repeat in 4 weeks.",
+    },
+    {
+        id: "DOC-003",
+        title: "Vascular Duplex Ultrasound",
+        category: "Diagnostic Imaging",
+        dateIssued: "2026-01-20",
+        datePhoto: "2026-01-19",
+        thumbnail: scanImages[2],
+        summary:
+            "Bilateral lower extremity venous duplex scan. Right leg: patent deep venous system, no DVT. Left leg: incompetent great saphenous vein with reflux >0.5 seconds at the saphenofemoral junction. Deep veins patent bilaterally. Superficial venous insufficiency confirmed on the left, correlating with wound location. Arterial ABI 0.95 bilaterally — no significant arterial compromise. Recommend continued compression therapy. Consider endovenous ablation if conservative management fails.",
+    },
+    {
+        id: "DOC-004",
+        title: "Referral Letter — Vascular Surgery",
+        category: "Correspondence",
+        dateIssued: "2026-01-22",
+        datePhoto: "2026-01-22",
+        thumbnail: scanImages[4],
+        summary:
+            "Referral to vascular surgery for evaluation of chronic venous insufficiency and non-healing venous ulcer. Patient history includes 8-week ulcer duration with suboptimal response to compression therapy alone.",
+    },
+    {
+        id: "DOC-005",
+        title: "Nutrition Assessment",
+        category: "Dietetic Report",
+        dateIssued: "2026-02-05",
+        datePhoto: "2026-02-05",
+        thumbnail: scanImages[0],
+        summary:
+            "Nutritional screening completed. BMI 28.4 — overweight. Prealbumin 18 mg/dL (low-normal), indicating marginal protein status. Vitamin C and Zinc levels within reference range. Caloric intake estimated at 1,600 kcal/day, below recommended 1,800–2,000 kcal for wound healing. Initiated oral nutritional supplement (ONS) with high protein. Recommended increased dietary protein to 1.2 g/kg/day. Follow-up in 2 weeks to reassess prealbumin and weight trend.",
+    },
+    {
+        id: "DOC-006",
+        title: "Wound Culture & Sensitivity",
+        category: "Microbiology",
+        dateIssued: "2026-01-25",
+        datePhoto: "2026-01-24",
+        thumbnail: scanImages[1],
+        summary:
+            "Wound swab culture obtained from left lower leg ulcer. Growth of Staphylococcus aureus (MSSA) — sensitive to oxacillin, cephalexin, clindamycin, TMP-SMX. No MRSA detected. No Pseudomonas or anaerobes isolated. Recommend topical antimicrobial dressing. Systemic antibiotics not indicated at this time given absence of cellulitis.",
+    },
+    {
+        id: "DOC-007",
+        title: "Compression Therapy Protocol",
+        category: "Treatment Plan",
+        dateIssued: "2026-01-18",
+        datePhoto: "2026-01-18",
+        thumbnail: scanImages[3],
+        summary:
+            "Four-layer compression bandaging initiated. Applied from base of toes to below knee with 50% overlap. Resting pressure target: 35–40 mmHg. Patient educated on importance of daily walks and limb elevation when seated. Contraindications reviewed — ABI confirmed >0.8. Rebandaging schedule: every 5–7 days or sooner if slippage occurs.",
+    },
+    {
+        id: "DOC-008",
+        title: "Pharmacy Medication Review",
+        category: "Pharmacy",
+        dateIssued: "2026-02-01",
+        datePhoto: "2026-02-01",
+        thumbnail: scanImages[4],
+        summary:
+            "Current medications: Metformin 1000 mg BD, Lisinopril 10 mg OD, Aspirin 75 mg OD, Atorvastatin 20 mg OD. No known drug interactions affecting wound healing. Suggest addition of Pentoxifylline 400 mg TDS to enhance microcirculation. Zinc supplementation 220 mg OD recommended given marginal nutritional status.",
+    },
+    {
+        id: "DOC-009",
+        title: "Wound Progress Note — Week 4",
+        category: "Clinical Summary",
+        dateIssued: "2026-02-04",
+        datePhoto: "2026-02-04",
+        thumbnail: scanImages[0],
+        summary:
+            "Wound area reduced by 22% since initial assessment. Granulation tissue increased to 85%. Slough reduced to 10%. Exudate levels decreasing — switched from foam to lower-absorbency dressing. Patient compliance good with compression therapy. Pain VAS score dropped from 5/10 to 3/10.",
+    },
+    {
+        id: "DOC-010",
+        title: "Diabetes Management Plan",
+        category: "Endocrinology",
+        dateIssued: "2026-01-15",
+        datePhoto: "2026-01-15",
+        thumbnail: scanImages[2],
+        summary:
+            "HbA1c 7.8% — suboptimal glycemic control. Fasting glucose ranges 130–180 mg/dL. Metformin dose increased to 1000 mg BD from 500 mg BD. Self-monitoring blood glucose logs reviewed. Dietary counseling reinforced. Target HbA1c <7.0% to support wound healing. Recheck HbA1c in 3 months.",
+    },
+    {
+        id: "DOC-011",
+        title: "Consent — Sharp Debridement",
+        category: "Consent Form",
+        dateIssued: "2026-01-21",
+        datePhoto: "2026-01-21",
+        thumbnail: scanImages[3],
+        summary:
+            "Informed consent obtained for sharp debridement of necrotic wound tissue. Risks explained including pain, bleeding, and potential damage to healthy tissue. Patient verbally confirmed understanding and signed consent form.",
+    },
+    {
+        id: "DOC-012",
+        title: "Physiotherapy Assessment",
+        category: "Rehabilitation",
+        dateIssued: "2026-01-30",
+        datePhoto: "2026-01-30",
+        thumbnail: scanImages[0],
+        summary:
+            "Lower limb mobility assessment. Ankle dorsiflexion limited to 5° on left (10° right). Calf muscle pump function impaired — reduced heel-raise repetitions (8 vs expected 20). Prescribed daily ankle ROM exercises, toe raises, and graduated walking programme. Aim to improve venous return through muscle pump activation.",
+    },
+    {
+        id: "DOC-013",
+        title: "Wound Progress Note — Week 6",
+        category: "Clinical Summary",
+        dateIssued: "2026-02-11",
+        datePhoto: "2026-02-11",
+        thumbnail: scanImages[0],
+        summary:
+            "Wound area now 5.8 cm², down 18% from week 4. Wound bed fully granulated (95%). Minimal serous exudate. Periwound intact, no maceration. Compression maintained. Patient reports near-complete resolution of pain (VAS 1/10). Epithelialization visible at wound edges. On track for closure within 4–6 weeks.",
+    },
+    {
+        id: "DOC-014",
+        title: "Discharge Planning Checklist",
+        category: "Care Planning",
+        dateIssued: "2026-02-12",
+        datePhoto: "2026-02-12",
+        thumbnail: scanImages[4],
+        summary:
+            "Discharge planning initiated. Community nurse referral submitted for ongoing wound care. Compression hosiery ordered (Class II, below-knee). Patient education completed on self-care, skin inspection, and signs of infection. GP follow-up appointment scheduled in 2 weeks. Diabetic foot care leaflet provided.",
+    },
+    {
+        id: "DOC-015",
+        title: "X-Ray — Left Lower Leg",
+        category: "Radiology",
+        dateIssued: "2026-01-19",
+        datePhoto: "2026-01-19",
+        thumbnail: scanImages[2],
+        summary:
+            "AP and lateral views of the left tibia/fibula. No fracture or bony erosion. No foreign body identified. Soft tissue swelling noted around medial malleolus consistent with known ulcer. No osteomyelitis changes. Unremarkable bony anatomy.",
+    },
+    {
+        id: "DOC-016",
+        title: "Pain Management Plan",
+        category: "Anaesthesia",
+        dateIssued: "2026-01-26",
+        datePhoto: "2026-01-26",
+        thumbnail: scanImages[3],
+        summary:
+            "Wound-related pain assessed using VAS and Brief Pain Inventory. Background pain VAS 3/10, procedural pain (dressing change) 6/10. Initiated topical lidocaine 2% gel applied 15 min before dressing changes. Oral paracetamol 1g QDS as baseline analgesia. Avoid NSAIDs due to potential effect on healing.",
+    },
+    {
+        id: "DOC-017",
+        title: "Tissue Viability Specialist Review",
+        category: "Specialist Consult",
+        dateIssued: "2026-02-03",
+        datePhoto: "2026-02-03",
+        thumbnail: scanImages[0],
+        summary:
+            "Specialist tissue viability review. Wound trajectory positive — consistent area reduction over 4 weeks. Current dressing regimen appropriate. Recommend trial of collagen matrix dressing on next change to accelerate granulation in the remaining slough areas. Continue compression. No indication for NPWT at this stage.",
+    },
+    {
+        id: "DOC-018",
+        title: "Allergy Documentation",
+        category: "Patient Safety",
+        dateIssued: "2026-01-14",
+        datePhoto: "2026-01-14",
+        thumbnail: scanImages[3],
+        summary:
+            "Documented allergy: Penicillin — reaction type: urticaria and angioedema. Severity: moderate. Cross-reactivity with amoxicillin confirmed. Safe alternatives: azithromycin, clindamycin. Patient wears allergy alert bracelet. EHR allergy flags updated.",
+    },
+    {
+        id: "DOC-019",
+        title: "Wound Measurement Log",
+        category: "Clinical Data",
+        dateIssued: "2026-02-14",
+        datePhoto: "2026-02-14",
+        thumbnail: scanImages[1],
+        summary:
+            "Serial wound measurement record. Week 1: 4.2 × 3.0 cm (12.6 cm²). Week 2: 3.8 × 2.7 cm (10.3 cm²). Week 3: 3.5 × 2.4 cm (8.4 cm²). Week 4: 3.2 × 2.1 cm (6.7 cm²). Week 6: 2.9 × 2.0 cm (5.8 cm²). Linear healing trajectory confirmed. Projected closure: 4–6 weeks at current rate.",
+    },
+    {
+        id: "DOC-020",
+        title: "Multidisciplinary Team Meeting Notes",
+        category: "MDT Summary",
+        dateIssued: "2026-02-07",
+        datePhoto: "2026-02-07",
+        thumbnail: scanImages[4],
+        summary:
+            "MDT attendees: wound care nurse, vascular surgeon, dietitian, physiotherapist, diabetic nurse. Consensus: wound healing on track. Continue current compression and dressing regimen. Optimize glycemic control. Vascular intervention not required at this time — review in 4 weeks. Discharge planning to commence.",
+    },
+    {
+        id: "DOC-021",
+        title: "Leg Elevation Protocol",
+        category: "Nursing Care Plan",
+        dateIssued: "2026-01-17",
+        datePhoto: "2026-01-17",
+        thumbnail: scanImages[3],
+        summary:
+            "Leg elevation protocol instituted. Target: limb elevated above heart level for 30 minutes, 4 times daily. Ankle exercises during elevation (10 dorsiflexion/plantarflexion cycles per session). Night-time elevation with 15 cm bed blocks. Patient provided with positioning wedge.",
+    },
+    {
+        id: "DOC-022",
+        title: "Infection Screening — Follow-up",
+        category: "Microbiology",
+        dateIssued: "2026-02-08",
+        datePhoto: "2026-02-08",
+        thumbnail: scanImages[1],
+        summary:
+            "Repeat wound swab culture — no pathogenic organisms isolated. Previous S. aureus cleared with topical antimicrobial therapy. CRP normalized at 3.2 mg/L (down from 8.4). WBC 6.8 — within normal limits. No clinical signs of infection. Antimicrobial dressing discontinued, switched to simple non-adherent contact layer.",
+    },
+    {
+        id: "DOC-023",
+        title: "Patient Education Record",
+        category: "Education",
+        dateIssued: "2026-02-06",
+        datePhoto: "2026-02-06",
+        thumbnail: scanImages[4],
+        summary:
+            "Education session completed covering: wound self-assessment, signs of infection (increased redness, warmth, odor, exudate), compression hosiery application and care, skin moisturizing regimen, dietary recommendations for wound healing, importance of smoking cessation (patient is non-smoker), and when to contact healthcare provider.",
+    },
+    {
+        id: "DOC-024",
+        title: "Insurance Pre-Authorization",
+        category: "Administration",
+        dateIssued: "2026-01-16",
+        datePhoto: "2026-01-16",
+        thumbnail: scanImages[2],
+        summary:
+            "Pre-authorization obtained for: compression bandaging supplies (4-layer system), wound care dressings (foam, alginate, collagen matrix), vascular duplex ultrasound, tissue viability specialist consultation. Authorization valid through 2026-04-15. Reference number: PA-2026-44821.",
+    },
+    {
+        id: "DOC-025",
+        title: "Wound Progress Note — Week 8",
+        category: "Clinical Summary",
+        dateIssued: "2026-02-18",
+        datePhoto: "2026-02-18",
+        thumbnail: scanImages[0],
+        summary:
+            "Wound area reduced to 4.2 cm². Active epithelialization advancing from wound margins. Wound bed 100% granulation, no slough or necrotic tissue. Exudate minimal, clear serous. Peri-wound skin healthy. Transitioning to maintenance compression hosiery. Dressing change frequency reduced to twice weekly. Patient independent with hosiery application.",
+    },
+]
+
+/* ── Single expandable document row ── */
+
+function DocumentRow({ doc }: { doc: (typeof documents)[number] }) {
+    const [expanded, setExpanded] = useState(false)
+
+    return (
+        <div className="group flex gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-card/80">
+            {/* Thumbnail */}
+            <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+                <Image
+                    src={doc.thumbnail}
+                    alt={doc.title}
+                    fill
+                    className="object-cover"
+                />
+            </div>
+
+            {/* Metadata */}
+            <div className="flex w-40 shrink-0 flex-col justify-center gap-1.5">
+                <h3 className="text-sm font-semibold text-foreground leading-tight">{doc.title}</h3>
+                <p className="text-xs text-muted-foreground">{doc.category}</p>
+                <div className="flex flex-col gap-0.5 text-[11px] text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        Issued {doc.dateIssued}
+                    </span>
+                    <span className="flex items-center gap-1">
+                        <Camera className="h-3 w-3" />
+                        Photo {doc.datePhoto}
+                    </span>
+                </div>
+            </div>
+
+            {/* Summary */}
+            <div className="flex min-w-0 flex-1 flex-col justify-center">
+                <p
+                    className={cn(
+                        "text-[13px] leading-relaxed text-muted-foreground transition-all",
+                        !expanded && "line-clamp-3"
+                    )}
+                >
+                    {doc.summary}
+                </p>
+                <button
+                    onClick={() => setExpanded((v) => !v)}
+                    className="mt-1.5 flex items-center gap-1 self-start text-[12px] font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                    {expanded ? (
+                        <>
+                            <ChevronUp className="h-3 w-3" /> Collapse
+                        </>
+                    ) : (
+                        <>
+                            <ChevronDown className="h-3 w-3" /> Read more
+                        </>
+                    )}
+                </button>
+            </div>
+        </div>
+    )
+}
+
+/* ── Documents gallery ── */
+
+export function DocumentsGallery() {
+    return (
+        <div className="flex h-full flex-col">
+            <div className="border-b border-border px-6 py-4">
+                <h2 className="text-sm font-semibold text-foreground">📋 Documents</h2>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                    {documents.length} documents on file
+                </p>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex flex-col gap-3">
+                    {documents.map((doc) => (
+                        <DocumentRow key={doc.id} doc={doc} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+}
