@@ -13,7 +13,7 @@ export const statusColor: Record<string, string> = {
     Improving: "bg-emerald-900/50 text-emerald-400",
     Stable: "bg-amber-900/50 text-amber-400",
     Worsening: "bg-red-900/50 text-red-400",
-    Healed: "bg-slate-800/50 text-slate-400",
+    Healed: "bg-pink-900/50 text-pink-400",
 }
 
 export const scanImages = [
