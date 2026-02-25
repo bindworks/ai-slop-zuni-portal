@@ -104,6 +104,9 @@ export function TimelineList({
                                                     <span className="text-[13px] leading-[10px] font-bold text-amber-500/80 uppercase tracking-tighter">
                                                         {new Date(event.dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                                     </span>
+                                                    <span className="text-[10px] leading-[10px] font-bold text-amber-500/40 uppercase tracking-tighter mt-0.5">
+                                                        {new Date(event.dateStr).getFullYear()}
+                                                    </span>
                                                 </>
                                             )}
                                         </div>
