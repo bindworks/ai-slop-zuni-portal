@@ -27,10 +27,10 @@ export function PanelListItem({
             <button
                 onClick={() => onSelect(id)}
                 className={cn(
-                    "w-full rounded-lg px-3 py-2 text-left transition-all duration-200",
+                    "w-full rounded-md px-3 py-1.5 text-left transition-all duration-200",
                     isHealed && "opacity-60",
                     selected
-                        ? "bg-accent ring-1 ring-primary/30 rounded-r-none border-r-2 border-r-primary"
+                        ? "bg-accent -mr-20 pr-[5.75rem] ring-1 ring-primary/30 rounded-r-md shadow-sm"
                         : "hover:bg-secondary"
                 )}
             >
@@ -66,15 +66,6 @@ export function PanelListItem({
                     </div>
                 )}
             </button>
-
-            {/* Connector arrow */}
-            {selected && (
-                <div className="absolute -right-[11px] top-1/2 z-10 -translate-y-1/2">
-                    <svg width="12" height="20" viewBox="0 0 12 20" fill="none">
-                        <path d="M0 0L12 10L0 20V0Z" className="fill-accent" />
-                    </svg>
-                </div>
-            )}
         </div>
     )
 }
