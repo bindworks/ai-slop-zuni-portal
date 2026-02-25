@@ -156,7 +156,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
         const doc = patient.documents?.find(d => d.id === sourceId)
         if (!doc || !doc.url) return null
 
-        return <DocumentDetail title={doc.title} url={doc.url} />
+        return <DocumentDetail doc={doc} />
     }
 
     if (type === 'photos') {

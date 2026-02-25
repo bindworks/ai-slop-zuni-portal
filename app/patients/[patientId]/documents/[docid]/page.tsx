@@ -20,8 +20,7 @@ export default function DocumentDetailPage({
 
     return (
         <DocumentPreview
-            title={doc.title}
-            url={doc.url}
+            doc={doc}
             onClose={() => router.push(`/patients/${patientId}/documents`)}
         />
     )

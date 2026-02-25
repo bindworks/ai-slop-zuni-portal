@@ -42,7 +42,7 @@ export default function TimelineLayout({
                 dateStr: doc.dateIssued,
                 type: 'document',
                 title: doc.title,
-                description: doc.category,
+                description: [doc.category, doc.issuingInstitution, doc.doctor].filter(Boolean).join(', '),
                 sourceId: doc.id
             })
         })

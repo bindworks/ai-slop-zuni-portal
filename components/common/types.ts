@@ -57,6 +57,8 @@ export interface Document {
     thumbnail: string
     url?: string
     summary: string
+    issuingInstitution?: string
+    doctor?: string
 }
 
 export interface Patient {

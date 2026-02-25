@@ -27,8 +27,7 @@ export function DocumentsGallery() {
 
             {previewDoc && previewDoc.url && (
                 <DocumentPreview
-                    title={previewDoc.title}
-                    url={previewDoc.url}
+                    doc={previewDoc}
                     onClose={() => setPreviewDoc(null)}
                 />
             )}
