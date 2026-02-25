@@ -1,19 +1,14 @@
 "use client"
 
 import { useState, useRef, useCallback } from "react"
-import { Stethoscope } from "lucide-react"
-import { ImagePreview } from "../image-preview/image-preview"
+import { useParams, useRouter } from "next/navigation"
 import { VisitColumn } from "./visit-column"
 import { getPatientHistory } from "@/lib/mock-data"
 
 export function WoundHistoryGallery({
-    selectedImage,
-    onSelectImage,
     patientId,
     woundId,
 }: {
-    selectedImage: number | string | null
-    onSelectImage: (id: number | string) => void
     patientId: string
     woundId: string
 }) {
@@ -21,14 +16,8 @@ export function WoundHistoryGallery({
     const currentVisit = visits[0]
     const historyVisits = visits.slice(1)
 
-    const [previewImageId, setPreviewImageId] = useState<number | string | null>(null)
-
-    // Flatten all images for navigation
-    const allVisits = [currentVisit, ...historyVisits]
-    const allImages = allVisits.flatMap(v => v.images)
-
-    const currentPreviewIndex = allImages.findIndex(img => img.id === previewImageId)
-    const previewImage = allImages[currentPreviewIndex]
+    const { imageid } = useParams()
+    const router = useRouter()
 
     const scrollRefs = useRef<(HTMLDivElement | null)[]>([])
     const activeScroller = useRef<HTMLDivElement | null>(null)
@@ -52,7 +41,11 @@ export function WoundHistoryGallery({
     }, [])
 
     const [notesExpanded, setNotesExpanded] = useState(false)
-    const toggleNotes = useCallback(() => setNotesExpanded((v) => !v), [])
+    const toggleNotes = useCallback(() => setNotesExpanded((v: boolean) => !v), [])
+
+    const handlePreviewImage = (id: string | number) => {
+        router.push(`/patients/${patientId}/wounds/${woundId}/images/${id}`)
+    }
 
     return (
         <div className="flex h-full w-full bg-background/50">
@@ -62,15 +55,14 @@ export function WoundHistoryGallery({
                     key={currentVisit.date}
                     visit={currentVisit}
                     previousVisit={historyVisits[0]}
-                    selectedImage={selectedImage}
-                    onSelectImage={onSelectImage}
-                    idx={-1}
+                    selectedImage={imageid as string}
+                    onSelectImage={handlePreviewImage}
+                    idx={0}
                     scrollRef={registerScrollRef(0)}
                     onSyncScroll={handleScroll}
                     onPointerEnterScroll={handlePointerEnter}
                     notesExpanded={notesExpanded}
                     onToggleNotes={toggleNotes}
-                    onPreviewImage={setPreviewImageId}
                     isCurrent
                 />
             </div>
@@ -84,29 +76,19 @@ export function WoundHistoryGallery({
                                 key={visit.date}
                                 visit={visit}
                                 previousVisit={previousVisit}
-                                selectedImage={selectedImage}
-                                onSelectImage={onSelectImage}
-                                idx={vIdx}
+                                selectedImage={imageid as string}
+                                onSelectImage={handlePreviewImage}
+                                idx={vIdx + 1}
                                 scrollRef={registerScrollRef(vIdx + 1)}
                                 onSyncScroll={handleScroll}
                                 onPointerEnterScroll={handlePointerEnter}
                                 notesExpanded={notesExpanded}
                                 onToggleNotes={toggleNotes}
-                                onPreviewImage={setPreviewImageId}
                             />
                         )
                     })}
                 </div>
             </div>
-
-            {/* Fullscreen Preview */}
-            {previewImage && (
-                <ImagePreview
-                    src={previewImage.src}
-                    alt={`${previewImage.tag} - ${previewImage.id} `}
-                    onClose={() => setPreviewImageId(null)}
-                />
-            )}
         </div>
     )
 }

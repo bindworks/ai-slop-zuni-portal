@@ -1,8 +1,20 @@
 "use client"
 
-import { User, Calendar, Hash, MapPin, AlertCircle } from "lucide-react"
+import { User, Calendar, Hash, MapPin, AlertCircle, Image as ImageIcon } from "lucide-react"
 import { PanelListItem } from "../common/panel-list-item"
-import { Patient } from "@/components/common/types"
+import { Patient, Visit } from "@/components/common/types"
+
+/* ── Helpers ── */
+
+const getHealedDuration = (history: Visit[]) => {
+  if (history.length < 2) return "1 week";
+  // history is sorted desc (newest first)
+  const end = new Date(history[0].date);
+  const start = new Date(history[history.length - 1].date);
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
+  return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""}`;
+};
 
 /* ── Main component ── */
 
@@ -79,29 +91,27 @@ export function PatientPanel({
 
         <PanelListItem
           id="TIMELINE"
-          icon="🕰️"
+          icon="🗓️"
           label="Timeline"
           subtitle="Patient care history"
           selected={selectedItem === "TIMELINE"}
-          onSelect={onSelectItem}
+          href={`/patients/${patient.id}/timeline`}
         />
         <PanelListItem
           id="DOCUMENTS"
-          icon="📋"
-          label="Documents"
+          icon="🗂️"
+          label="Documents (12)"
           subtitle="Medical records & reports"
-          meta="12 files"
           selected={selectedItem === "DOCUMENTS"}
-          onSelect={onSelectItem}
+          href={`/patients/${patient.id}/documents`}
         />
         <PanelListItem
           id="OTHER"
-          icon="🖼️"
-          label="Photo Album"
+          icon="📸"
+          label="Photo Album (20)"
           subtitle="General photos & media"
-          meta="20 photos"
           selected={selectedItem === "OTHER"}
-          onSelect={onSelectItem}
+          href={`/patients/${patient.id}/photos`}
         />
 
         {/* Wounds */}
@@ -126,9 +136,22 @@ export function PatientPanel({
                     label={wound.label}
                     subtitle={wound.type}
                     status={wound.status}
-                    meta={`${wound.imageCount} images | Since ${wound.date}`}
+                    meta={
+                      <div className="flex items-center gap-1.5 leading-none">
+                        <ImageIcon className="h-3 w-3" />
+                        <span>{wound.imageCount}</span>
+                        <span className="opacity-40 ml-1">
+                          {wound.status === "Healed" ? "⮜┈⮞" : "╰┈⮞"}
+                        </span>
+                        <span>
+                          {wound.status === "Healed"
+                            ? getHealedDuration(wound.history)
+                            : wound.date}
+                        </span>
+                      </div>
+                    }
                     selected={selectedItem === wound.id}
-                    onSelect={onSelectItem}
+                    href={`/patients/${patient.id}/wounds/${wound.id}`}
                     isHealed={wound.status === "Healed"}
                   />
                 )

@@ -107,7 +107,7 @@ export default function PatientListPage() {
                                 {filteredPatients.map((patient) => (
                                     <tr
                                         key={patient.id}
-                                        onClick={() => router.push(`/patients/${patient.id}/detail`)}
+                                        onClick={() => router.push(`/patients/${patient.id}`)}
                                         className="group cursor-pointer transition-colors hover:bg-primary/5"
                                     >
                                         <td className="px-4 py-2">

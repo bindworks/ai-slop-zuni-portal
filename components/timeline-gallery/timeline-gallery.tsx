@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Calendar, Camera, Clock, FileText, HeartPulse } from "lucide-react"
+import { Calendar, Camera, FileText, HeartPulse } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Patient } from "../common/types"
 import { TimelineDetail } from "./timeline-detail"
@@ -88,7 +88,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
             <div className="flex h-full w-[28rem] shrink-0 flex-col border-r border-border bg-card/10">
                 <div className="border-b border-border px-6 py-4 shrink-0">
                     <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-base leading-none">🗓️</span>
                         Timeline
                     </h2>
                     <p className="mt-0.5 text-xs text-muted-foreground">
@@ -96,7 +96,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                     </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto scrollbar-hide pt-2">
+                <div className="flex-1 overflow-y-auto pt-2 custom-scrollbar">
                     <div className="w-[28rem] py-4 relative px-2">
                         {/* The timeline line - Bright yellow & thick */}
                         <div className="absolute left-[3.25rem] top-0 bottom-0 w-[4px] bg-amber-400/60" />
@@ -169,8 +169,8 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                                                         )}>
                                                             {/* DO NOT TOUCH THE LINE BELOW - Icon manually fixed (UTF-32) */}
                                                             {event.type === 'visit' && "❤️‍🩹"}
-                                                            {event.type === 'document' && "📋"}
-                                                            {event.type === 'photos' && "🖼️"}
+                                                            {event.type === 'document' && "🗂️"}
+                                                            {event.type === 'photos' && "📸"}
                                                         </div>
                                                         <div className="flex-1 min-w-0">
                                                             <h4 className={cn(
@@ -208,7 +208,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                     <div className="flex h-full items-center justify-center text-muted-foreground p-12 text-center">
                         <div>
                             <div className="h-12 w-12 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4 opacity-50">
-                                <Clock className="h-6 w-6" />
+                                <span className="text-2xl leading-none">🗓️</span>
                             </div>
                             <p className="text-sm font-medium">Select an event</p>
                             <p className="text-xs opacity-70 mt-1 uppercase tracking-wider">to view clinical details</p>

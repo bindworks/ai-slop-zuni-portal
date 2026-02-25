@@ -12,7 +12,7 @@ export function DocumentsGallery() {
     return (
         <div className="flex h-full flex-col relative">
             <div className="border-b border-border px-6 py-4">
-                <h2 className="text-sm font-semibold text-foreground">📋 Documents</h2>
+                <h2 className="text-sm font-semibold text-foreground">🗂️ Documents</h2>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                     {documents.length} documents on file
                 </p>

@@ -62,7 +62,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
         return (
             <div className="flex h-full flex-col">
                 <div className="border-b border-border px-6 py-4 bg-card/50">
-                    <h2 className="text-sm font-semibold text-foreground">🖼️ Photos from {new Date(dateStr + "T00:00:00").toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</h2>
+                    <h2 className="text-sm font-semibold text-foreground">📸 Photos from {new Date(dateStr + "T00:00:00").toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</h2>
                     <p className="mt-0.5 text-xs text-muted-foreground">{group.photos.length} clinical images</p>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">

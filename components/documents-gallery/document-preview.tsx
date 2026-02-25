@@ -19,7 +19,7 @@ export function DocumentPreview({ title, url, onClose }: DocumentPreviewProps) {
     }, [onClose])
 
     return (
-        <div className="fixed inset-0 z-[100] flex flex-col bg-background/95 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="flex h-full flex-col bg-background/95 animate-in fade-in duration-200">
             {/* Header */}
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-border/50 bg-background/50 px-6 backdrop-blur-xl">
                 <h2 className="text-sm font-semibold text-foreground">{title}</h2>
