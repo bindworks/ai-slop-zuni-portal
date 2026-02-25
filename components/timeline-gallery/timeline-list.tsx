@@ -64,17 +64,27 @@ export function TimelineList({
                                 <div key={event.id} className={cn("relative", spacingClass)}>
                                     {isYearBreak ? (
                                         <div className="mb-2 flex items-center gap-2 pr-4">
-                                            <div className="ml-[3rem] h-px flex-1 bg-amber-400/40" />
+                                            <div className="ml-[3rem] h-px w-2 bg-amber-400/40" />
+                                            {dayDiff > 1 && (
+                                                <span className="text-[13px] leading-[10px] uppercase tracking-widest text-amber-500/90 italic">
+                                                    {dayDiff} days earlier
+                                                </span>
+                                            )}
+                                            <div className="h-px flex-1 bg-amber-400/40" />
                                             <span className="text-[13px] leading-[10px] font-black uppercase tracking-[0.2em] text-amber-500">
                                                 🥳 {event.date.getFullYear()}
                                             </span>
                                             <div className="h-px w-8 bg-amber-400/60" />
                                         </div>
                                     ) : (
-                                        dayDiff >= 3 && (
+                                        dayDiff === 1 ? (
+                                            <div className="mb-2 flex items-center">
+                                                <div className="ml-[3rem] h-px w-24 bg-amber-400/30" />
+                                            </div>
+                                        ) : dayDiff >= 2 && (
                                             <div className="mb-2 flex items-center gap-2">
                                                 <div className="ml-[3rem] h-px w-2 bg-amber-400/40" />
-                                                <span className="text-[13px] leading-[10px] font-bold uppercase tracking-widest text-amber-500/90 italic">
+                                                <span className="text-[13px] leading-[10px] uppercase tracking-widest text-amber-500/90 italic">
                                                     {dayDiff} days earlier
                                                 </span>
                                             </div>
@@ -101,7 +111,7 @@ export function TimelineList({
                                         <div className="flex-1 min-w-0 relative">
                                             <div className={cn(
                                                 "rounded-md px-2 py-1 text-left transition-all duration-200 group/item",
-                                                isSelected ? "bg-accent shadow-sm ring-1 ring-primary/30 rounded-r-md" : "hover:bg-secondary/30"
+                                                isSelected ? "bg-accent shadow-sm ring-1 ring-primary/30 rounded-r-md" : "hover:bg-secondary"
                                             )}>
                                                 <div className="flex items-start gap-2.5">
                                                     <div className={cn(

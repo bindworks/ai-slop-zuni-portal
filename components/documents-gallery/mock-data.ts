@@ -11,8 +11,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Comprehensive wound assessment documenting a venous ulcer on the left lower leg. The wound measures 3.2 × 2.1 cm with a depth of 0.4 cm. The wound bed shows 80% granulation tissue with mild serous exudate. Periwound skin is intact with no maceration. Compression therapy is ongoing and well-tolerated. Recommend continuation of current care plan with weekly re-evaluation. Patient reports decreasing pain levels over the past two weeks.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Comprehensive wound assessment documenting a venous ulcer on the left lower leg, including wound dimensions, depth, and wound bed composition. Documents the state of granulation tissue, exudate levels, and periwound skin condition. Includes notes on ongoing compression therapy tolerance and recommendations for care plan continuation with scheduled re-evaluation. Patient-reported pain trends are also recorded.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -24,8 +24,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[1],
         url: "/sample.pdf",
         summary:
-            "Complete blood count within normal limits. WBC 7.2, RBC 4.5, Hemoglobin 13.8, Hematocrit 41.2%, Platelets 245. No signs of infection or anemia. CRP slightly elevated at 8.4 mg/L, suggesting mild systemic inflammation consistent with chronic wound. ESR 22 mm/hr. Recommend repeat in 4 weeks.",
-        issuingInstitution: "Central Animal Hospital",
+            "Complete blood count results within normal limits, covering white and red blood cell counts, hemoglobin, hematocrit, and platelets. CRP slightly elevated suggesting mild systemic inflammation consistent with chronic wound. ESR measured. Recommendation for repeat testing included.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -37,8 +37,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[2],
         url: "/sample.pdf",
         summary:
-            "Bilateral lower extremity venous duplex scan. Right leg: patent deep venous system, no DVT. Left leg: incompetent great saphenous vein with reflux >0.5 seconds at the saphenofemoral junction. Deep veins patent bilaterally. Superficial venous insufficiency confirmed on the left, correlating with wound location. Arterial ABI 0.95 bilaterally — no significant arterial compromise. Recommend continued compression therapy. Consider endovenous ablation if conservative management fails.",
-        issuingInstitution: "Westside Veterinary",
+            "Bilateral lower extremity venous duplex scan results. Documents patency of deep venous system, presence or absence of DVT, and saphenous vein competency with reflux measurements. Includes arterial ABI assessment bilaterally. Confirms superficial venous insufficiency correlating with wound location. Recommendations for compression therapy and potential endovenous ablation are included.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -50,8 +50,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[4],
         url: "/sample.pdf",
         summary:
-            "Referral to vascular surgery for evaluation of chronic venous insufficiency and non-healing venous ulcer. Patient history includes 8-week ulcer duration with suboptimal response to compression therapy alone.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Referral to vascular surgery for evaluation of chronic venous insufficiency and non-healing venous ulcer. Documents ulcer duration and suboptimal response to compression therapy alone.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -63,8 +63,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Nutritional screening completed. BMI 28.4 — overweight. Prealbumin 18 mg/dL (low-normal), indicating marginal protein status. Vitamin C and Zinc levels within reference range. Caloric intake estimated at 1,600 kcal/day, below recommended 1,800–2,000 kcal for wound healing. Initiated oral nutritional supplement (ONS) with high protein. Recommended increased dietary protein to 1.2 g/kg/day. Follow-up in 2 weeks to reassess prealbumin and weight trend.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Nutritional screening results including BMI classification, prealbumin levels indicating protein status, and vitamin and mineral assessments. Documents caloric intake relative to wound healing requirements. Includes initiated oral nutritional supplement plan with high protein recommendations and scheduled follow-up for reassessment.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -76,8 +76,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[1],
         url: "/sample.pdf",
         summary:
-            "Wound swab culture obtained from left lower leg ulcer. Growth of Staphylococcus aureus (MSSA) — sensitive to oxacillin, cephalexin, clindamycin, TMP-SMX. No MRSA detected. No Pseudomonas or anaerobes isolated. Recommend topical antimicrobial dressing. Systemic antibiotics not indicated at this time given absence of cellulitis.",
-        issuingInstitution: "Central Animal Hospital",
+            "Wound swab culture results from left lower leg ulcer documenting bacterial growth, antibiotic sensitivity profile, and absence of resistant organisms. Includes recommendations for topical antimicrobial dressing and assessment of systemic antibiotic necessity.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -89,8 +89,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[3],
         url: "/sample.pdf",
         summary:
-            "Four-layer compression bandaging initiated. Applied from base of toes to below knee with 50% overlap. Resting pressure target: 35–40 mmHg. Patient educated on importance of daily walks and limb elevation when seated. Contraindications reviewed — ABI confirmed >0.8. Rebandaging schedule: every 5–7 days or sooner if slippage occurs.",
-        issuingInstitution: "Westside Veterinary",
+            "Four-layer compression bandaging protocol documenting application technique, target resting pressure range, and overlap specifications. Includes patient education notes on daily activity and limb elevation. Documents ABI confirmation for contraindication clearance and rebandaging schedule.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -102,8 +102,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[4],
         url: "/sample.pdf",
         summary:
-            "Current medications: Metformin 1000 mg BD, Lisinopril 10 mg OD, Aspirin 75 mg OD, Atorvastatin 20 mg OD. No known drug interactions affecting wound healing. Suggest addition of Pentoxifylline 400 mg TDS to enhance microcirculation. Zinc supplementation 220 mg OD recommended given marginal nutritional status.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Current medication review listing all active prescriptions with dosages and frequency. Documents assessment of drug interactions affecting wound healing. Includes recommendations for additional medications to enhance microcirculation and zinc supplementation based on nutritional status.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -115,8 +115,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Wound area reduced by 22% since initial assessment. Granulation tissue increased to 85%. Slough reduced to 10%. Exudate levels decreasing — switched from foam to lower-absorbency dressing. Patient compliance good with compression therapy. Pain VAS score dropped from 5/10 to 3/10.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Wound progress note documenting area reduction since initial assessment, granulation tissue improvement, and slough reduction. Notes decreasing exudate levels and corresponding dressing change. Documents patient compliance with compression therapy and improving pain scores.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -128,8 +128,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[2],
         url: "/sample.pdf",
         summary:
-            "HbA1c 7.8% — suboptimal glycemic control. Fasting glucose ranges 130–180 mg/dL. Metformin dose increased to 1000 mg BD from 500 mg BD. Self-monitoring blood glucose logs reviewed. Dietary counseling reinforced. Target HbA1c <7.0% to support wound healing. Recheck HbA1c in 3 months.",
-        issuingInstitution: "Central Animal Hospital",
+            "Diabetes management plan documenting HbA1c levels and glycemic control assessment. Includes fasting glucose trends, medication dosage adjustments, and self-monitoring blood glucose log review. Documents dietary counseling and target glycemic goals to support wound healing with scheduled recheck.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -141,8 +141,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[3],
         url: "/sample.pdf",
         summary:
-            "Informed consent obtained for sharp debridement of necrotic wound tissue. Risks explained including pain, bleeding, and potential damage to healthy tissue. Patient verbally confirmed understanding and signed consent form.",
-        issuingInstitution: "Westside Veterinary",
+            "Informed consent documentation for sharp debridement of necrotic wound tissue. Lists explained risks including pain, bleeding, and potential tissue damage. Confirms patient understanding and signed consent.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -154,8 +154,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Lower limb mobility assessment. Ankle dorsiflexion limited to 5° on left (10° right). Calf muscle pump function impaired — reduced heel-raise repetitions (8 vs expected 20). Prescribed daily ankle ROM exercises, toe raises, and graduated walking programme. Aim to improve venous return through muscle pump activation.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Lower limb mobility assessment documenting ankle dorsiflexion range and calf muscle pump function. Includes comparison between affected and unaffected sides. Prescribed exercise programme covering ankle range-of-motion, toe raises, and graduated walking to improve venous return through muscle pump activation.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -167,8 +167,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Wound area now 5.8 cm², down 18% from week 4. Wound bed fully granulated (95%). Minimal serous exudate. Periwound intact, no maceration. Compression maintained. Patient reports near-complete resolution of pain (VAS 1/10). Epithelialization visible at wound edges. On track for closure within 4–6 weeks.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Wound progress note documenting continued area reduction and wound bed granulation improvement. Notes minimal exudate, intact periwound skin, and maintained compression therapy. Documents near-complete pain resolution and visible epithelialization at wound edges with projected closure timeline.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -180,8 +180,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[4],
         url: "/sample.pdf",
         summary:
-            "Discharge planning initiated. Community nurse referral submitted for ongoing wound care. Compression hosiery ordered (Class II, below-knee). Patient education completed on self-care, skin inspection, and signs of infection. GP follow-up appointment scheduled in 2 weeks. Diabetic foot care leaflet provided.",
-        issuingInstitution: "Central Animal Hospital",
+            "Discharge planning documentation including community nurse referral for ongoing wound care and compression hosiery order. Documents completed patient education on self-care, skin inspection, and infection signs. Includes scheduled GP follow-up and provided educational materials.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -193,8 +193,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[2],
         url: "/sample.pdf",
         summary:
-            "AP and lateral views of the left tibia/fibula. No fracture or bony erosion. No foreign body identified. Soft tissue swelling noted around medial malleolus consistent with known ulcer. No osteomyelitis changes. Unremarkable bony anatomy.",
-        issuingInstitution: "Westside Veterinary",
+            "Radiographic assessment of the left lower leg with standard views. Documents absence of fractures, bony erosion, and foreign bodies. Notes soft tissue swelling consistent with known ulcer and confirms no signs of osteomyelitis.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -206,8 +206,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[3],
         url: "/sample.pdf",
         summary:
-            "Wound-related pain assessed using VAS and Brief Pain Inventory. Background pain VAS 3/10, procedural pain (dressing change) 6/10. Initiated topical lidocaine 2% gel applied 15 min before dressing changes. Oral paracetamol 1g QDS as baseline analgesia. Avoid NSAIDs due to potential effect on healing.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Wound-related pain management plan using validated assessment tools. Documents background and procedural pain levels. Includes initiated topical anaesthetic protocol for dressing changes, baseline oral analgesia, and notes on medications to avoid due to healing considerations.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -219,8 +219,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Specialist tissue viability review. Wound trajectory positive — consistent area reduction over 4 weeks. Current dressing regimen appropriate. Recommend trial of collagen matrix dressing on next change to accelerate granulation in the remaining slough areas. Continue compression. No indication for NPWT at this stage.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Specialist tissue viability review documenting positive wound trajectory with consistent area reduction. Confirms current dressing regimen appropriateness and recommends collagen matrix dressing trial to accelerate granulation. Notes continuation of compression and assessment of negative pressure wound therapy indication.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -232,8 +232,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[3],
         url: "/sample.pdf",
         summary:
-            "Documented allergy: Penicillin — reaction type: urticaria and angioedema. Severity: moderate. Cross-reactivity with amoxicillin confirmed. Safe alternatives: azithromycin, clindamycin. Patient wears allergy alert bracelet. EHR allergy flags updated.",
-        issuingInstitution: "Central Animal Hospital",
+            "Allergy documentation recording specific drug allergy with reaction type and severity classification. Documents confirmed cross-reactivity with related medications and lists safe alternatives. Notes patient alert bracelet status and electronic health record flag updates.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -245,8 +245,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[1],
         url: "/sample.pdf",
         summary:
-            "Serial wound measurement record. Week 1: 4.2 × 3.0 cm (12.6 cm²). Week 2: 3.8 × 2.7 cm (10.3 cm²). Week 3: 3.5 × 2.4 cm (8.4 cm²). Week 4: 3.2 × 2.1 cm (6.7 cm²). Week 6: 2.9 × 2.0 cm (5.8 cm²). Linear healing trajectory confirmed. Projected closure: 4–6 weeks at current rate.",
-        issuingInstitution: "Westside Veterinary",
+            "Serial wound measurement log tracking dimensions and calculated area over multiple weeks. Documents a consistent linear healing trajectory across all recorded visits. Includes projected wound closure timeline based on current healing rate.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -258,8 +258,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[4],
         url: "/sample.pdf",
         summary:
-            "MDT attendees: wound care nurse, vascular surgeon, dietitian, physiotherapist, diabetic nurse. Consensus: wound healing on track. Continue current compression and dressing regimen. Optimize glycemic control. Vascular intervention not required at this time — review in 4 weeks. Discharge planning to commence.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Multidisciplinary team meeting notes listing attendees across specialties. Documents consensus on wound healing progression and agreement to continue current compression and dressing regimen. Includes recommendations for glycemic optimization, vascular intervention assessment, and discharge planning initiation.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -271,8 +271,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[3],
         url: "/sample.pdf",
         summary:
-            "Leg elevation protocol instituted. Target: limb elevated above heart level for 30 minutes, 4 times daily. Ankle exercises during elevation (10 dorsiflexion/plantarflexion cycles per session). Night-time elevation with 15 cm bed blocks. Patient provided with positioning wedge.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Leg elevation protocol documentation specifying target elevation frequency, duration, and positioning. Includes prescribed ankle exercises during elevation sessions and night-time elevation arrangements. Documents provided equipment and positioning aids.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
     {
@@ -284,8 +284,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[1],
         url: "/sample.pdf",
         summary:
-            "Repeat wound swab culture — no pathogenic organisms isolated. Previous S. aureus cleared with topical antimicrobial therapy. CRP normalized at 3.2 mg/L (down from 8.4). WBC 6.8 — within normal limits. No clinical signs of infection. Antimicrobial dressing discontinued, switched to simple non-adherent contact layer.",
-        issuingInstitution: "Central Animal Hospital",
+            "Follow-up wound swab culture results confirming clearance of previously identified organisms with topical antimicrobial therapy. Documents normalized inflammatory markers and absence of clinical infection signs. Includes dressing protocol change from antimicrobial to simple non-adherent contact layer.",
+        issuingInstitution: "Central City Hospital",
         doctor: "Dr. James Wilson",
     },
     {
@@ -297,8 +297,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[4],
         url: "/sample.pdf",
         summary:
-            "Education session completed covering: wound self-assessment, signs of infection (increased redness, warmth, odor, exudate), compression hosiery application and care, skin moisturizing regimen, dietary recommendations for wound healing, importance of smoking cessation (patient is non-smoker), and when to contact healthcare provider.",
-        issuingInstitution: "Westside Veterinary",
+            "Patient education record documenting completed session topics including wound self-assessment techniques, infection warning signs, compression hosiery application and care, skin moisturizing regimen, dietary recommendations for wound healing, and guidance on when to contact healthcare providers.",
+        issuingInstitution: "Westside General Hospital",
         doctor: "Dr. Gregory House",
     },
     {
@@ -310,8 +310,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[2],
         url: "/sample.pdf",
         summary:
-            "Pre-authorization obtained for: compression bandaging supplies (4-layer system), wound care dressings (foam, alginate, collagen matrix), vascular duplex ultrasound, tissue viability specialist consultation. Authorization valid through 2026-04-15. Reference number: PA-2026-44821.",
-        issuingInstitution: "Oak Tree Pet Clinic",
+            "Insurance pre-authorization documentation covering approved supplies and procedures including compression bandaging system, wound care dressings, diagnostic imaging, and specialist consultation. Includes authorization validity period and reference information.",
+        issuingInstitution: "Oak Tree Medical Center",
         doctor: "Dr. Lisa Cuddy",
     },
     {
@@ -323,8 +323,8 @@ export const documents: Document[] = [
         thumbnail: scanImages[0],
         url: "/sample.pdf",
         summary:
-            "Wound area reduced to 4.2 cm². Active epithelialization advancing from wound margins. Wound bed 100% granulation, no slough or necrotic tissue. Exudate minimal, clear serous. Peri-wound skin healthy. Transitioning to maintenance compression hosiery. Dressing change frequency reduced to twice weekly. Patient independent with hosiery application.",
-        issuingInstitution: "Zuni Vets Clinic",
+            "Wound progress note documenting significant area reduction with active epithelialization advancing from margins. Wound bed fully granulated with no slough or necrotic tissue. Documents minimal exudate, healthy peri-wound skin, and transition to maintenance compression hosiery. Notes reduced dressing change frequency and patient independence with hosiery application.",
+        issuingInstitution: "Zuni Medical Center",
         doctor: "Dr. Emily Chen",
     },
 ]

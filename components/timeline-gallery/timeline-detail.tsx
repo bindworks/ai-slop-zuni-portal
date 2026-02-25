@@ -54,6 +54,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     notesExpanded={notesExpanded}
                                     onToggleNotes={toggleNotes}
                                     onPreviewImage={() => { }}
+                                    valueAlign="right"
                                 />
                             </Link>
                         ) : (
@@ -76,6 +77,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     notesExpanded={notesExpanded}
                                     onToggleNotes={toggleNotes}
                                     onPreviewImage={() => { }}
+                                    valueAlign="right"
                                 />
                             </Link>
                         ) : (
@@ -111,6 +113,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     notesExpanded={notesExpanded}
                                     onToggleNotes={toggleNotes}
                                     onPreviewImage={() => { }}
+                                    valueAlign="left"
                                 />
                             </Link>
                         ) : (
@@ -133,6 +136,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     notesExpanded={notesExpanded}
                                     onToggleNotes={toggleNotes}
                                     onPreviewImage={() => { }}
+                                    valueAlign="left"
                                 />
                             </Link>
                         ) : (

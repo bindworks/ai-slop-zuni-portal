@@ -32,8 +32,8 @@ export function PanelListItem({
                     {icon && <span className="text-lg leading-none mt-0.5 shrink-0">{icon}</span>}
                     <div className="flex flex-col gap-0">
                         <p className={cn(
-                            "text-sm font-medium leading-none",
-                            selected ? "text-primary" : "text-foreground"
+                            "text-sm font-medium leading-none transition-colors",
+                            selected ? "text-primary" : "text-foreground group-hover:text-primary"
                         )}>
                             {label}
                         </p>
@@ -64,7 +64,7 @@ export function PanelListItem({
     )
 
     const className = cn(
-        "block w-full rounded-md px-3 py-1 text-left transition-all duration-200",
+        "group block w-full rounded-md px-3 py-1 text-left transition-all duration-200",
         isHealed && "opacity-60",
         selected
             ? "bg-accent -mr-20 ring-1 ring-primary/30 rounded-r-md shadow-sm"

@@ -49,6 +49,7 @@ export function VisitColumn({
     notesExpanded,
     onToggleNotes,
     onPreviewImage,
+    valueAlign = 'right',
 }: {
     visit: Visit
     previousVisit?: Visit
@@ -60,6 +61,7 @@ export function VisitColumn({
     notesExpanded?: boolean
     onToggleNotes?: () => void
     onPreviewImage?: (id: number | string) => void
+    valueAlign?: 'left' | 'right'
 }) {
     return (
         <div className={cn(
@@ -155,7 +157,7 @@ export function VisitColumn({
                     <div className="flex flex-col gap-1">
                         {WOUND_STATE_KEYS.map((k, index) => {
                             const v = visit.details.woundState[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} even={index % 2 === 0} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>
@@ -165,7 +167,7 @@ export function VisitColumn({
                     <div className="flex flex-col gap-1">
                         {DIAGNOSIS_KEYS.map((k, index) => {
                             const v = visit.details.diagnosis[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} even={index % 2 === 0} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>
@@ -175,7 +177,7 @@ export function VisitColumn({
                     <div className="flex flex-col gap-1">
                         {MATERIAL_KEYS.map((k, index) => {
                             const v = visit.details.materials[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} even={index % 2 === 0} />
+                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>

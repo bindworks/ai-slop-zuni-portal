@@ -6,12 +6,14 @@ export function DetailRow({
     prevValue,
     showLabel,
     even = false,
+    valueAlign = 'right',
 }: {
     label: string
     value: string
     prevValue?: string
     showLabel?: boolean
     even?: boolean
+    valueAlign?: 'left' | 'right'
 }) {
     const changed = prevValue !== undefined && prevValue !== value
     return (
@@ -22,7 +24,8 @@ export function DetailRow({
             {showLabel && <span className="shrink-0 text-xs leading-tight text-muted-foreground">{label}</span>}
             <span
                 className={cn(
-                    "text-right text-xs font-medium leading-tight line-clamp-2",
+                    "text-xs font-medium leading-tight line-clamp-2",
+                    valueAlign === 'right' ? "ml-auto text-right" : "text-left",
                     changed ? "text-amber-400" : "text-foreground"
                 )}
             >
