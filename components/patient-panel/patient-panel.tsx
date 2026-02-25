@@ -78,6 +78,14 @@ export function PatientPanel({
       <div className="flex-1 overflow-y-auto px-3 py-2 space-y-1">
 
         <PanelListItem
+          id="TIMELINE"
+          icon="🕰️"
+          label="Timeline"
+          subtitle="Patient care history"
+          selected={selectedItem === "TIMELINE"}
+          onSelect={onSelectItem}
+        />
+        <PanelListItem
           id="DOCUMENTS"
           icon="📋"
           label="Documents"
@@ -108,19 +116,23 @@ export function PatientPanel({
                 if (b.status === "Healed" && a.status !== "Healed") return -1
                 return 0
               })
-              .map((wound) => (
-                <PanelListItem
-                  key={wound.id}
-                  id={wound.id}
-                  label={wound.label}
-                  subtitle={wound.type}
-                  status={wound.status}
-                  meta={`${wound.imageCount} images | Since ${wound.date}`}
-                  selected={selectedItem === wound.id}
-                  onSelect={onSelectItem}
-                  isHealed={wound.status === "Healed"}
-                />
-              ))}
+              .map((wound) => {
+                // DO NOT TOUCH THE WOUND ICON (icon prop) BELOW - Manually fixed (UTF-32)
+                return (
+                  <PanelListItem
+                    key={wound.id}
+                    id={wound.id}
+                    icon="❤️‍🩹"
+                    label={wound.label}
+                    subtitle={wound.type}
+                    status={wound.status}
+                    meta={`${wound.imageCount} images | Since ${wound.date}`}
+                    selected={selectedItem === wound.id}
+                    onSelect={onSelectItem}
+                    isHealed={wound.status === "Healed"}
+                  />
+                )
+              })}
           </div>
         </div>
 

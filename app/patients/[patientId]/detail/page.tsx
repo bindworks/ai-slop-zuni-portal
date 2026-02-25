@@ -5,7 +5,8 @@ import { PatientPanel } from "@/components/patient-panel/patient-panel"
 import { WoundHistoryGallery } from "@/components/wound-history-gallery/wound-history-gallery"
 import { DocumentsGallery } from "@/components/documents-gallery/documents-gallery"
 import { PhotoAlbumGallery } from "@/components/photo-album-gallery/photo-album-gallery"
-import { Activity, Bell, Settings } from "lucide-react"
+import { TimelineGallery } from "@/components/timeline-gallery/timeline-gallery"
+import { Activity, Bell, Settings, Clock } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { mockPatients } from "@/lib/mock-data"
 import Link from "next/link"
@@ -58,6 +59,8 @@ export default function PatientDetailPage({ params }: { params: Promise<{ patien
                             selectedImage={selectedImage}
                             onSelectImage={setSelectedImage}
                         />
+                    ) : selectedItem === "TIMELINE" ? (
+                        <TimelineGallery patient={patient} />
                     ) : selectedItem === "DOCUMENTS" ? (
                         <DocumentsGallery />
                     ) : selectedItem === "OTHER" ? (

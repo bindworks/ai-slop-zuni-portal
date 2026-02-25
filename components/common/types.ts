@@ -71,6 +71,8 @@ export interface Patient {
     diagnoses: string[]
     woundCount: number
     wounds: WoundSummary[]
+    documents: Document[]
+    photoGroups: DateGroup[]
 }
 
 export interface WoundSummary {

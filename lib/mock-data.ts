@@ -1,4 +1,6 @@
-import { Visit, Patient, Area, Institution } from "@/components/common/types"
+import { Visit, Patient, Area, Institution, DateGroup, Document as DocType } from "@/components/common/types"
+import { documents as mockDocs } from "@/components/documents-gallery/mock-data"
+import { photoGroups as mockPhotos } from "@/components/photo-album-gallery/mock-data"
 
 // --- Custom Seeded Random Generator ---
 class SeededRandom {
@@ -70,115 +72,229 @@ export const mockAreas: Area[] = [
 ];
 
 // --- Data Generation Helpers ---
-function generateWoundHistory(patientId: string, woundIndex: number, rng: SeededRandom): Visit[] {
-    const historyLength = rng.nextInt(3, 8);
-    const startDate = new Date(2025, 11, rng.nextInt(1, 28));
-    const history: Visit[] = [];
+// --- Data Generation Helpers ---
 
-    const baseWidth = rng.next() * 5 + 1;
-    const baseLength = rng.next() * 5 + 1;
-    const baseDepth = rng.next() * 2;
-    const woundType = rng.pick(["Venous Ulcer", "Diabetic Foot Ulcer", "Pressure Injury", "Surgical Site"]);
-    const woundLocation = rng.pick(["Left Lower Leg", "Right Heel", "Sacral Region", "Left Foot Dorsum", "Right Outer Thigh", "Left Forearm"]);
+function applyHealedState(visit: Visit, woundType: string, patientId: string) {
+    visit.summary = "Wound is completely epithelized and closed.";
+    visit.details.measurements.length = "0.0";
+    visit.details.measurements.width = "0.0";
+    visit.details.measurements.depth = "0.0";
+    visit.details.measurements.area = "0.0";
+    visit.details.measurements.tissues = [
+        { label: "Epithelial", value: 100, color: "pink" }
+    ];
+    visit.details.clinicalNotes = `Patient ${patientId} follow-up for ${woundType}. Wound is completely healed and closed. No further dressings required. Discharged from active wound care.`;
+    visit.details.woundState["Wound Bed"] = "100% Epithelialized";
+    visit.details.woundState["Exudate"] = "None";
+    visit.details.woundState["Color"] = "Pink";
+}
 
-    for (let i = 0; i < historyLength; i++) {
-        const visitDate = new Date(startDate);
-        visitDate.setDate(startDate.getDate() + i * 7);
-        const dateStr = visitDate.toISOString().split("T")[0];
+function generateVisitEntry(
+    patientId: string,
+    dateStr: string,
+    woundType: string,
+    woundLocation: string,
+    visitIndex: number,
+    historyLength: number,
+    baseMeasurements: { width: number, length: number, depth: number },
+    rng: SeededRandom
+): Visit {
+    // Healing progress (randomized but generally decreasing)
+    const progressFactor = Math.max(0.2, 1 - (visitIndex / Math.max(1, historyLength - 1)) * 0.8 + (rng.next() - 0.5) * 0.2);
+    const currentWidth = (baseMeasurements.width * progressFactor).toFixed(1);
+    const currentLength = (baseMeasurements.length * progressFactor).toFixed(1);
+    const currentDepth = (baseMeasurements.depth * progressFactor).toFixed(1);
+    const currentArea = (parseFloat(currentWidth) * parseFloat(currentLength)).toFixed(2);
 
-        // Healing progress (randomized but generally decreasing)
-        const progressFactor = Math.max(0.2, 1 - (i / historyLength) * 0.8 + (rng.next() - 0.5) * 0.2);
-        const currentWidth = (baseWidth * progressFactor).toFixed(1);
-        const currentLength = (baseLength * progressFactor).toFixed(1);
-        const currentDepth = (baseDepth * progressFactor).toFixed(1);
-        const currentArea = (parseFloat(currentWidth) * parseFloat(currentLength)).toFixed(2);
+    // Tissues (shifts toward granulation/epithelial over time)
+    const granulation = Math.floor(60 + visitIndex * 5);
+    const slough = 100 - granulation;
 
-        // Tissues (shifts toward granulation/epithelial over time)
-        const granulation = Math.floor(60 + i * 5);
-        const slough = 100 - granulation;
+    const assessment = rng.pick([
+        `Wound bed assessment: ${granulation}% granulation, ${slough}% slough. `,
+        `Visual inspection shows improving granulation (${granulation}%) with decreasing slough. `,
+        `Wound margins are intact. Bed is predominantly granulation tissue (${granulation}%). `
+    ]);
+    const cleaning = rng.pick([
+        `Irrigated extensively with normal saline. Gentle mechanical debridement performed using sterile gauze to remove loose slough and debris. `,
+        `Wound cleansed with PHMB solution. Autolytic debridement ongoing. Removed devitalized tissue carefully from edges. `,
+        `Cleansed with warm saline irrigation. Exudate gently wiped from surrounding skin. `,
+        `Washed with hypochlorous acid wound cleanser. No sharp debridement required today. `
+    ]);
+    const dressing = rng.pick([
+        `Applied primary alginate dressing to manage moderate exudate, covered with an absorbent foam pad, and secured with a 2-layer compression system. `,
+        `Primary hydrocolloid dressing applied directly to the wound bed. Secured edges with transparent film to prevent edge rolling. `,
+        `Packed wound loosely with silver-impregnated ribbon gauze. Covered with silicone foam secondary dressing. `,
+        `Applied barrier cream to periwound skin to prevent maceration. Dressed with a non-adherent contact layer and absorbent composite dressing. `
+    ]);
+    const tolerance = rng.pick([
+        `Patient tolerated the procedure well with minimal reported discomfort. Instructed to keep dressing dry and intact. `,
+        `Patient reported mild pain (3/10) during cleansing, relieved promptly after dressing application. Follow-up scheduled as planned. `,
+        `Procedure completed without incident. Patient and family educated on signs of infection to monitor at home. `
+    ]);
 
-        const assessment = rng.pick([
-            `Wound bed assessment: ${granulation}% granulation, ${slough}% slough. `,
-            `Visual inspection shows improving granulation (${granulation}%) with decreasing slough. `,
-            `Wound margins are intact. Bed is predominantly granulation tissue (${granulation}%). `
-        ]);
-        const cleaning = rng.pick([
-            `Irrigated extensively with normal saline. Gentle mechanical debridement performed using sterile gauze to remove loose slough and debris. `,
-            `Wound cleansed with PHMB solution. Autolytic debridement ongoing. Removed devitalized tissue carefully from edges. `,
-            `Cleansed with warm saline irrigation. Exudate gently wiped from surrounding skin. `,
-            `Washed with hypochlorous acid wound cleanser. No sharp debridement required today. `
-        ]);
-        const dressing = rng.pick([
-            `Applied primary alginate dressing to manage moderate exudate, covered with an absorbent foam pad, and secured with a 2-layer compression system. `,
-            `Primary hydrocolloid dressing applied directly to the wound bed. Secured edges with transparent film to prevent edge rolling. `,
-            `Packed wound loosely with silver-impregnated ribbon gauze. Covered with silicone foam secondary dressing. `,
-            `Applied barrier cream to periwound skin to prevent maceration. Dressed with a non-adherent contact layer and absorbent composite dressing. `
-        ]);
-        const tolerance = rng.pick([
-            `Patient tolerated the procedure well with minimal reported discomfort. Instructed to keep dressing dry and intact. `,
-            `Patient reported mild pain (3/10) during cleansing, relieved promptly after dressing application. Follow-up scheduled as planned. `,
-            `Procedure completed without incident. Patient and family educated on signs of infection to monitor at home. `
-        ]);
+    return {
+        date: dateStr,
+        label: `${woundType} at ${woundLocation}`,
+        summary: `${granulation}% granulation. ${visitIndex === 0 ? "Initial assessment." : "Progressive healing noted."}`,
+        images: Array.from({
+            length: rng.nextFloat() > 0.8 ? rng.nextInt(3, 5) : rng.nextInt(1, 3)
+        }, (_, imgIdx) => ({
+            id: `img-${patientId}-${dateStr}-${imgIdx}`,
+            src: rng.pick(woundImages),
+            tag: "Clinical View"
+        })),
+        details: {
+            measurements: {
+                length: currentLength,
+                width: currentWidth,
+                depth: currentDepth,
+                area: currentArea,
+                tissues: [
+                    { label: "Granulation", value: granulation, color: "red" },
+                    { label: "Slough", value: slough, color: "yellow" }
+                ]
+            },
+            clinicalNotes: `Patient ${patientId} follow-up for ${woundType}. ${assessment}${cleaning}${dressing}${tolerance}`,
+            doctor: rng.pick(doctors),
+            time: `${rng.nextInt(8, 16)}:00`,
+            camera: rng.pick(cameras),
+            woundState: {
+                "Wound Bed": `${granulation}% granulation`,
+                "Exudate": rng.pick(["Serous", "Serosanguinous", "Purulent", "Sanguinous"]),
+                "Exudate Amount": rng.pick(["None", "Scant", "Moderate", "Heavy"]),
+                "Odor": rng.pick(["None", "Mild", "Strong", "Foul"]),
+                "Color": rng.pick(["Pink", "Red", "Yellow", "Black"]),
+                "Edges": rng.pick(["Attached", "Unattached", "Rolled", "Undermined"]),
+                "Periwound Skin": rng.pick(["Intact", "Erythematous", "Macerated", "Dry"]),
+                "Pain Level": `${rng.nextInt(0, 10)}/10`,
+                "Signs of Infection": rng.pick(["None", "Erythema", "Warmth", "Increased Pain"]),
+                "Tunneling": rng.pick(["None", "1cm at 12 o'clock", "2cm at 3 o'clock", "None"]),
+            },
+            diagnosis: {
+                "Diagnosis": woundType,
+                "Location": woundLocation,
+                "Classification": rng.pick(["Stage 2", "Stage 3", "Unstageable", "Superficial"]),
+                "Etiology": rng.pick(["Pressure", "Venous Insufficiency", "Arterial Insufficiency", "Surgical", "Trauma"]),
+                "Treatment Plan": rng.pick(["Moist wound healing", "Negative pressure therapy", "Debridement", "Compression"]),
+                "Frequency": rng.pick(["Daily", "Every 2 days", "Every 3 days", "Weekly"]),
+                "Debridement": rng.pick(["None", "Autolytic", "Enzymatic", "Sharp", "Mechanical"])
+            },
+            materials: {
+                "Primary Dressing": rng.pick(["Foam", "Alginate", "Hydrocolloid", "Silver", "Hydrogel"]),
+                "Secondary Dressing": rng.pick(["Fixation tape", "Film", "Gauze", "Composite"]),
+                "Compression": rng.pick(["None", "2-layer", "3-layer", "Tubular"]),
+                "Skin Protectant": rng.pick(["Barrier cream", "Film spray", "Zinc oxide", "None"]),
+                "Cleanser": rng.pick(["Saline", "PHMB", "Hypochlorous acid", "Tap water"])
+            }
+        }
+    };
+}
 
-        history.push({
-            date: dateStr,
-            label: `${woundType} at ${woundLocation}`,
-            summary: `${granulation}% granulation. ${i === 0 ? "Initial assessment." : "Progressive healing noted."}`,
-            images: Array.from({
-                length: rng.nextFloat() > 0.8 ? rng.nextInt(3, 5) : rng.nextInt(1, 3)
-            }, (_, imgIdx) => ({
-                id: `img-${patientId}-${i}-${imgIdx}`,
-                src: `/${["wound-1.jpg", "wound-2.jpg", "wound-3.jpg"][imgIdx % 3]}`,
-                tag: "Clinical View"
-            })),
-            details: {
-                measurements: {
-                    length: currentLength,
-                    width: currentWidth,
-                    depth: currentDepth,
-                    area: currentArea,
-                    tissues: [
-                        { label: "Granulation", value: granulation, color: "red" },
-                        { label: "Slough", value: slough, color: "yellow" }
-                    ]
-                },
-                clinicalNotes: `Patient ${patientId} follow-up for ${woundType}. ${assessment}${cleaning}${dressing}${tolerance}`,
-                doctor: rng.pick(doctors),
-                time: `${rng.nextInt(8, 16)}:00`,
-                camera: rng.pick(cameras),
-                woundState: {
-                    "Wound Bed": `${granulation}% granulation`,
-                    "Exudate": rng.pick(["Serous", "Serosanguinous", "Purulent", "Sanguinous"]),
-                    "Exudate Amount": rng.pick(["None", "Scant", "Moderate", "Heavy"]),
-                    "Odor": rng.pick(["None", "Mild", "Strong", "Foul"]),
-                    "Color": rng.pick(["Pink", "Red", "Yellow", "Black"]),
-                    "Edges": rng.pick(["Attached", "Unattached", "Rolled", "Undermined"]),
-                    "Periwound Skin": rng.pick(["Intact", "Erythematous", "Macerated", "Dry"]),
-                    "Pain Level": `${rng.nextInt(0, 10)}/10`,
-                    "Signs of Infection": rng.pick(["None", "Erythema", "Warmth", "Increased Pain"]),
-                    "Tunneling": rng.pick(["None", "1cm at 12 o'clock", "2cm at 3 o'clock", "None"]),
-                },
-                diagnosis: {
-                    "Diagnosis": woundType,
-                    "Location": woundLocation,
-                    "Classification": rng.pick(["Stage 2", "Stage 3", "Unstageable", "Superficial"]),
-                    "Etiology": rng.pick(["Pressure", "Venous Insufficiency", "Arterial Insufficiency", "Surgical", "Trauma"]),
-                    "Treatment Plan": rng.pick(["Moist wound healing", "Negative pressure therapy", "Debridement", "Compression"]),
-                    "Frequency": rng.pick(["Daily", "Every 2 days", "Every 3 days", "Weekly"]),
-                    "Debridement": rng.pick(["None", "Autolytic", "Enzymatic", "Sharp", "Mechanical"])
-                },
-                materials: {
-                    "Primary Dressing": rng.pick(["Foam", "Alginate", "Hydrocolloid", "Silver", "Hydrogel"]),
-                    "Secondary Dressing": rng.pick(["Fixation tape", "Film", "Gauze", "Composite"]),
-                    "Compression": rng.pick(["None", "2-layer", "3-layer", "Tubular"]),
-                    "Skin Protectant": rng.pick(["Barrier cream", "Film spray", "Zinc oxide", "None"]),
-                    "Cleanser": rng.pick(["Saline", "PHMB", "Hypochlorous acid", "Tap water"])
-                }
+function generateSynchronizedPatientData(patientId: string, rng: SeededRandom) {
+    const visitsCount = rng.nextInt(6, 14);
+    const startDate = new Date(2025, 10, rng.nextInt(1, 28)); // Late 2025 start
+
+    const potentialWounds = [
+        { type: "Pressure Injury", location: "Sacral Region" },
+        { type: "Venous Ulcer", location: "Left Lower Leg" },
+        { type: "Diabetic Foot Ulcer", location: "Right Heel" },
+        { type: "Surgical Site", location: "Abdominal" },
+        { type: "Pressure Injury", location: "Left Trochanter" }
+    ];
+
+    // Initial setup
+    const initialWoundCount = rng.nextInt(1, 2);
+    const wounds: any[] = [];
+
+    for (let i = 0; i < initialWoundCount; i++) {
+        const w = potentialWounds[i];
+        wounds.push({
+            id: `W-00${i + 1}`,
+            label: w.type,
+            type: w.location,
+            status: "New",
+            history: [],
+            appearanceVisitIndex: 0,
+            healedVisitIndex: null,
+            baseMeasurements: {
+                width: rng.nextFloat() * 5 + 1,
+                length: rng.nextFloat() * 5 + 1,
+                depth: rng.nextFloat() * 2
             }
         });
     }
 
-    return history.reverse(); // Newest first
+    // Process visits
+    for (let i = 0; i < visitsCount; i++) {
+        const visitDate = new Date(startDate);
+        visitDate.setDate(startDate.getDate() + i * 7);
+        const dateStr = visitDate.toISOString().split("T")[0];
+
+        wounds.forEach(w => {
+            // Only process active/not-yet-healed wounds
+            if (w.healedVisitIndex !== null && i > w.healedVisitIndex) return;
+            if (i < w.appearanceVisitIndex) return;
+
+            const entry = generateVisitEntry(
+                patientId,
+                dateStr,
+                w.label,
+                w.type,
+                i - w.appearanceVisitIndex,
+                visitsCount,
+                w.baseMeasurements,
+                rng
+            );
+
+            // Chance to heal
+            const visitsActive = i - w.appearanceVisitIndex;
+            if (w.healedVisitIndex === null && visitsActive > 4 && rng.nextFloat() > 0.8) {
+                w.healedVisitIndex = i;
+                w.status = "Healed";
+                applyHealedState(entry, w.label, patientId);
+            } else if (w.healedVisitIndex === null) {
+                w.status = rng.pick(["Improving", "Stable", "Worsening"]);
+            }
+
+            w.history.push(entry);
+        });
+
+        // Chance to discover a new wound during a visit
+        if (i > 1 && i < visitsCount - 4 && rng.nextFloat() > 0.9 && wounds.length < 4) {
+            const nextIdx = wounds.length;
+            const w = potentialWounds[nextIdx];
+            wounds.push({
+                id: `W-00${nextIdx + 1}`,
+                label: w.type,
+                type: w.location,
+                status: "New",
+                history: [],
+                appearanceVisitIndex: i,
+                healedVisitIndex: null,
+                baseMeasurements: {
+                    width: rng.nextFloat() * 5 + 1,
+                    length: rng.nextFloat() * 5 + 1,
+                    depth: rng.nextFloat() * 2
+                }
+            });
+
+            // Add initial entry for the newly discovered wound today
+            const newWound = wounds[wounds.length - 1];
+            const entry = generateVisitEntry(patientId, dateStr, newWound.label, newWound.type, 0, visitsCount, newWound.baseMeasurements, rng);
+            newWound.history.push(entry);
+        }
+    }
+
+    return wounds.map(w => ({
+        id: w.id,
+        label: w.label,
+        type: w.type,
+        status: w.status,
+        date: w.history[w.history.length - 1].date,
+        imageCount: w.history.reduce((acc: number, v: any) => acc + v.images.length, 0),
+        history: [...w.history].reverse()
+    }));
 }
 
 // --- Generated Patients ---
@@ -193,61 +309,8 @@ function generateMockPatients(count: number): Patient[] {
         const woundsCount = rng.nextInt(1, 3);
         const healedCount = rng.nextInt(1, 2);
 
-        const wounds = [];
         const pRng = new SeededRandom(parseInt(id.replace("PAT-", "")) || 12345);
-
-        // Generate active wounds
-        for (let w = 1; w <= woundsCount; w++) {
-            const history = generateWoundHistory(id, w, pRng);
-            const totalImages = history.reduce((acc, visit) => acc + visit.images.length, 0);
-            const woundType = history[0]?.details?.diagnosis?.Diagnosis || "Wound";
-            const woundLocation = history[0]?.details?.diagnosis?.Location || "Unknown Location";
-            const oldestDate = history[history.length - 1]?.date || "2025-11-20";
-
-            wounds.push({
-                id: `W-00${w}`,
-                label: woundType,
-                type: woundLocation,
-                status: pRng.pick(["Improving", "Stable", "Worsening"]),
-                date: oldestDate,
-                imageCount: totalImages,
-                history: history
-            });
-        }
-
-        // Generate healed wounds
-        for (let w = 1; w <= healedCount; w++) {
-            const wId = woundsCount + w;
-            const history = generateWoundHistory(id, wId, pRng);
-            const totalImages = history.reduce((acc, visit) => acc + visit.images.length, 0);
-            const woundType = history[0]?.details?.diagnosis?.Diagnosis || "Wound";
-            const woundLocation = history[0]?.details?.diagnosis?.Location || "Unknown Location";
-            const oldestDate = history[history.length - 1]?.date || "2025-11-20";
-
-            // Force healed state
-            history[0].summary = "Wound is completely epithelized and closed.";
-            history[0].details.measurements.length = "0.0";
-            history[0].details.measurements.width = "0.0";
-            history[0].details.measurements.depth = "0.0";
-            history[0].details.measurements.area = "0.0";
-            history[0].details.measurements.tissues = [
-                { label: "Epithelial", value: 100, color: "pink" }
-            ];
-            history[0].details.clinicalNotes = `Patient ${id} follow-up for ${woundType}. Wound is completely healed and closed. No further dressings required. Discharged from active wound care.`;
-            history[0].details.woundState["Wound Bed"] = "100% Epithelialized";
-            history[0].details.woundState["Exudate"] = "None";
-            history[0].details.woundState["Color"] = "Pink";
-
-            wounds.push({
-                id: `W-00${wId}`,
-                label: woundType,
-                type: woundLocation,
-                status: "Healed",
-                date: oldestDate,
-                imageCount: totalImages,
-                history: history
-            });
-        }
+        const wounds = generateSynchronizedPatientData(id, pRng);
 
         patients.push({
             id,
@@ -260,7 +323,9 @@ function generateMockPatients(count: number): Patient[] {
             status,
             diagnoses: ["Chronic Wound Care"],
             woundCount: woundsCount,
-            wounds
+            wounds,
+            documents: mockDocs,
+            photoGroups: mockPhotos
         });
     }
     return patients;
