@@ -57,7 +57,7 @@ export function TimelineList({
                                 if (dayDiff === 0) spacingClass = "mt-0.5"
                                 else if (dayDiff === 1) spacingClass = "mt-2.5"
                                 else if (dayDiff === 2) spacingClass = "mt-5"
-                                else spacingClass = "mt-2"
+                                else spacingClass = "mt-6"
                             }
 
                             return (
