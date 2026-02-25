@@ -93,7 +93,7 @@ export default function PatientListPage() {
                     <div className="flex-1 overflow-auto rounded-xl border border-border bg-card shadow-sm">
                         <table className="w-full text-sm">
                             <thead className="sticky top-0 z-10">
-                                <tr className="border-b border-border bg-secondary/30">
+                                <tr className="border-b border-border bg-secondary/80">
                                     <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Patient</th>
                                     <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">MRN</th>
                                     <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Age</th>
@@ -121,10 +121,7 @@ export default function PatientListPage() {
                                         <td className="px-3 py-2 text-xs font-mono text-muted-foreground">{patient.mrn}</td>
                                         <td className="px-3 py-2 text-muted-foreground">{patient.age}y</td>
                                         <td className="px-3 py-2">
-                                            <span className="inline-flex items-center gap-1.5 text-xs">
-                                                <Activity className="h-3 w-3 text-muted-foreground" />
-                                                {patient.woundCount}
-                                            </span>
+                                            <span className="inline-flex items-center gap-1.5 text-xs">❤️‍🩹 {patient.woundCount}</span>
                                         </td>
                                         <td className="px-3 py-2 text-xs text-muted-foreground">{patient.lastVisit}</td>
                                         <td className="px-3 py-2">

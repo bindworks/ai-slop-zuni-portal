@@ -46,9 +46,6 @@ export function VisitColumn({
     idx,
     headerLabel,
     isCurrent = false,
-    scrollRef,
-    onSyncScroll,
-    onPointerEnterScroll,
     notesExpanded,
     onToggleNotes,
     onPreviewImage,
@@ -60,62 +57,65 @@ export function VisitColumn({
     idx: number
     headerLabel?: string
     isCurrent?: boolean
-    scrollRef?: (el: HTMLDivElement | null) => void
-    onSyncScroll?: (e: React.UIEvent<HTMLDivElement>) => void
-    onPointerEnterScroll?: (e: React.PointerEvent<HTMLDivElement>) => void
     notesExpanded?: boolean
     onToggleNotes?: () => void
     onPreviewImage?: (id: number | string) => void
 }) {
     return (
         <div className={cn(
-            "flex h-full flex-col border-r border-border transition-colors",
-            isCurrent ? "w-[23rem] bg-card" : "w-[16rem] bg-card/60"
+            "flex h-fit min-h-full flex-col border-r border-border transition-colors",
+            isCurrent ? "sticky left-0 z-20 w-[23rem] bg-card shadow-[4px_0_24px_-12px_rgba(0,0,0,0.8)]" : "w-[16rem] bg-card/60"
         )}>
-            {/* Header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-border bg-[#18212f] px-4 py-3">
-                <div className="flex items-baseline gap-2.5">
-                    <span className="text-[14px] font-medium text-slate-300">
-                        {headerLabel || visit.date}
-                    </span>
-                    <span className="text-[12px] font-medium text-slate-500">
-                        {getRelativeTime(visit.date)}
-                    </span>
+            {/* Sticky Top Headers Wrapper */}
+            <div className={cn(
+                "sticky top-0 flex flex-col shrink-0 shadow-sm transition-colors bg-card",
+                isCurrent ? "z-30" : "z-10"
+            )}>
+                {/* Header */}
+                <div className="flex shrink-0 items-center justify-between border-b border-border bg-[#18212f] px-4 py-3">
+                    <div className="flex items-baseline gap-2.5">
+                        <span className="text-[14px] font-medium text-slate-300">
+                            {headerLabel || visit.date}
+                        </span>
+                        <span className="text-[12px] font-medium text-slate-500">
+                            {getRelativeTime(visit.date)}
+                        </span>
+                    </div>
+                </div>
+
+                {/* Identity section — visit metadata */}
+                <div className="shrink-0 border-b border-border px-4 py-2">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        <span>{visit.details.time}</span>
+                        <span className="text-border">·</span>
+                        <span>{visit.details.doctor}</span>
+                    </div>
+                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <Camera className="h-3 w-3" />
+                        <span>{visit.details.camera}</span>
+                    </div>
+                </div>
+
+                {/* Images section — fixed (non-scrolling) */}
+                <div className="shrink-0 border-b border-border px-4 pt-4 pb-6 h-[8rem]">
+                    <div className="flex gap-2 overflow-x-auto">
+                        {visit.images.map((img, iIdx) => (
+                            <ImageThumb
+                                key={img.id}
+                                img={img}
+                                idx={idx * 3 + iIdx + 10}
+                                selectedImage={selectedImage}
+                                onSelectImage={onSelectImage}
+                                onPreviewImage={onPreviewImage}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            {/* Identity section — visit metadata */}
-            <div className="shrink-0 border-b border-border px-4 py-2">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
-                    <span>{visit.details.time}</span>
-                    <span className="text-border">·</span>
-                    <span>{visit.details.doctor}</span>
-                </div>
-                <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                    <Camera className="h-3 w-3" />
-                    <span>{visit.details.camera}</span>
-                </div>
-            </div>
-
-            {/* Images section — fixed (non-scrolling) */}
-            <div className="shrink-0 border-b border-border px-4 pt-4 pb-6 h-[8rem]">
-                <div className="flex gap-2 overflow-x-auto">
-                    {visit.images.map((img, iIdx) => (
-                        <ImageThumb
-                            key={img.id}
-                            img={img}
-                            idx={idx * 3 + iIdx + 10}
-                            selectedImage={selectedImage}
-                            onSelectImage={onSelectImage}
-                            onPreviewImage={onPreviewImage}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Scrollable area */}
-            <div className={cn("flex-1 overflow-y-auto", !isCurrent && "scrollbar-hide")} ref={scrollRef} onScroll={onSyncScroll} onPointerEnter={onPointerEnterScroll}>
+            {/* Scrollable content area */}
+            <div className="flex-1 pb-6">
 
                 {/* Measurements section */}
                 <DetailSection label="Measurements">

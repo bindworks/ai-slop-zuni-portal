@@ -42,7 +42,7 @@ export default function TimelineLayout({
                 dateStr: doc.dateIssued,
                 type: 'document',
                 title: doc.title,
-                description: doc.summary,
+                description: doc.category,
                 sourceId: doc.id
             })
         })

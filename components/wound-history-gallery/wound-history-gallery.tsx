@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { VisitColumn } from "./visit-column"
 import { getPatientHistory } from "@/lib/mock-data"
@@ -19,27 +19,6 @@ export function WoundHistoryGallery({
     const { imageid } = useParams()
     const router = useRouter()
 
-    const scrollRefs = useRef<(HTMLDivElement | null)[]>([])
-    const activeScroller = useRef<HTMLDivElement | null>(null)
-
-    const registerScrollRef = useCallback((index: number) => (el: HTMLDivElement | null) => {
-        scrollRefs.current[index] = el
-    }, [])
-
-    const handlePointerEnter = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-        activeScroller.current = e.currentTarget
-    }, [])
-
-    const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-        const el = e.currentTarget
-        if (el !== activeScroller.current) return
-        scrollRefs.current.forEach((ref) => {
-            if (ref && ref !== el) {
-                ref.scrollTop = el.scrollTop
-            }
-        })
-    }, [])
-
     const [notesExpanded, setNotesExpanded] = useState(false)
     const toggleNotes = useCallback(() => setNotesExpanded((v: boolean) => !v), [])
 
@@ -48,9 +27,8 @@ export function WoundHistoryGallery({
     }
 
     return (
-        <div className="flex h-full w-full bg-background/50">
-            {/* Fixed current-state column */}
-            <div className="shrink-0">
+        <div className="flex h-full w-full bg-background overflow-auto custom-scrollbar">
+            <div className="flex min-w-max h-fit">
                 <VisitColumn
                     key={currentVisit.date}
                     visit={currentVisit}
@@ -58,36 +36,25 @@ export function WoundHistoryGallery({
                     selectedImage={imageid as string}
                     onSelectImage={handlePreviewImage}
                     idx={0}
-                    scrollRef={registerScrollRef(0)}
-                    onSyncScroll={handleScroll}
-                    onPointerEnterScroll={handlePointerEnter}
                     notesExpanded={notesExpanded}
                     onToggleNotes={toggleNotes}
                     isCurrent
                 />
-            </div>
-            {/* Scrollable history columns */}
-            <div className="flex h-full flex-1 overflow-x-auto">
-                <div className="flex h-full flex-row">
-                    {historyVisits.map((visit, vIdx) => {
-                        const previousVisit = historyVisits[vIdx + 1]
-                        return (
-                            <VisitColumn
-                                key={visit.date}
-                                visit={visit}
-                                previousVisit={previousVisit}
-                                selectedImage={imageid as string}
-                                onSelectImage={handlePreviewImage}
-                                idx={vIdx + 1}
-                                scrollRef={registerScrollRef(vIdx + 1)}
-                                onSyncScroll={handleScroll}
-                                onPointerEnterScroll={handlePointerEnter}
-                                notesExpanded={notesExpanded}
-                                onToggleNotes={toggleNotes}
-                            />
-                        )
-                    })}
-                </div>
+                {historyVisits.map((visit, vIdx) => {
+                    const previousVisit = historyVisits[vIdx + 1]
+                    return (
+                        <VisitColumn
+                            key={visit.date}
+                            visit={visit}
+                            previousVisit={previousVisit}
+                            selectedImage={imageid as string}
+                            onSelectImage={handlePreviewImage}
+                            idx={vIdx + 1}
+                            notesExpanded={notesExpanded}
+                            onToggleNotes={toggleNotes}
+                        />
+                    )
+                })}
             </div>
         </div>
     )
