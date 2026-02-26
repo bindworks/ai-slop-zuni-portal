@@ -39,6 +39,7 @@ export function WoundHistoryGallery({
                     notesExpanded={notesExpanded}
                     onToggleNotes={toggleNotes}
                     isCurrent
+                    showBodyIndicator={true}
                 />
                 {historyVisits.map((visit, vIdx) => {
                     const previousVisit = historyVisits[vIdx + 1]

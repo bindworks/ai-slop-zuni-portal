@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react"
-import { Clock, Camera } from "lucide-react"
+import { Clock, Camera, Building2, MapPin, Activity, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Visit } from "../common/types"
 import { MiniStat } from "../common/mini-stat"
@@ -50,6 +50,7 @@ export function VisitColumn({
     onToggleNotes,
     onPreviewImage,
     valueAlign = 'right',
+    showBodyIndicator = false,
 }: {
     visit: Visit
     previousVisit?: Visit
@@ -62,6 +63,7 @@ export function VisitColumn({
     onToggleNotes?: () => void
     onPreviewImage?: (id: number | string) => void
     valueAlign?: 'left' | 'right'
+    showBodyIndicator?: boolean
 }) {
     return (
         <div className={cn(
@@ -86,16 +88,40 @@ export function VisitColumn({
                 </div>
 
                 {/* Identity section — visit metadata */}
-                <div className="shrink-0 border-b border-border px-4 py-2">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" />
-                        <span>{visit.details.time}</span>
+                <div className="shrink-0 space-y-0.5 border-b border-border px-4 py-1.5">
+                    <div className="flex items-center gap-1.5 text-[10px]">
+                        <span className="font-semibold text-foreground text-[11px]">
+                            {visit.details.woundLabel || "Wound"}
+                        </span>
                         <span className="text-border">·</span>
-                        <span>{visit.details.doctor}</span>
+                        <div className="flex items-center gap-1 text-muted-foreground">
+                            <MapPin className="h-2.5 w-2.5 shrink-0" />
+                            <span>{visit.details.woundLocation || "Location"}</span>
+                        </div>
                     </div>
-                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                        <Camera className="h-3 w-3" />
-                        <span>{visit.details.camera}</span>
+
+                    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                            <Clock className="h-2.5 w-2.5 shrink-0" />
+                            <span>{visit.details.time}</span>
+                        </div>
+                        <span className="text-border">·</span>
+                        <div className="flex items-center gap-1 truncate">
+                            <Building2 className="h-2.5 w-2.5 shrink-0" />
+                            <span className="truncate max-w-[10rem]">{visit.details.issuingInstitution || "Medical Center"}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                            <User className="h-2.5 w-2.5 shrink-0" />
+                            <span>{visit.details.doctor}</span>
+                        </div>
+                        <span className="text-border">·</span>
+                        <div className="flex items-center gap-1">
+                            <Camera className="h-2.5 w-2.5 shrink-0" />
+                            <span>{visit.details.camera}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -121,11 +147,32 @@ export function VisitColumn({
 
                 {/* Measurements section */}
                 <DetailSection label="Measurements">
-                    <MeasurementGraphic
-                        measurements={visit.details.measurements}
-                        prevMeasurements={previousVisit?.details.measurements}
-                        compact={!isCurrent}
-                    />
+                    <div className={cn(showBodyIndicator && visit.details.bodyIndicator ? "pr-28" : "")}>
+                        <MeasurementGraphic
+                            measurements={visit.details.measurements}
+                            prevMeasurements={previousVisit?.details.measurements}
+                            compact={!isCurrent}
+                        />
+                    </div>
+                    {showBodyIndicator && visit.details.bodyIndicator && (
+                        <div className="absolute bottom-6 right-4 top-10 w-24 shrink-0 flex items-center justify-center bg-white rounded-lg shadow-[0_0_12px_rgba(255,255,255,0.25),0_15px_50px_rgba(30,58,138,0.35)] border border-black/10 p-1.5 overflow-hidden">
+                            <img
+                                src={visit.details.bodyIndicator.view === 'front' ? '/panatchek_zepredu.png' :
+                                    visit.details.bodyIndicator.view === 'back' ? '/panatchek_zezadu.png' :
+                                        '/panatchek_bok.png'}
+                                alt="Body location"
+                                className="h-full w-auto object-contain brightness-110"
+                            />
+                            <div
+                                className="absolute w-4 h-4 bg-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,1)] border-2 border-white animate-pulse"
+                                style={{
+                                    left: `${visit.details.bodyIndicator.marker.x}%`,
+                                    top: `${visit.details.bodyIndicator.marker.y}%`,
+                                    transform: 'translate(-50%, -50%)'
+                                }}
+                            />
+                        </div>
+                    )}
                 </DetailSection>
 
                 {/* Clinical Notes */}

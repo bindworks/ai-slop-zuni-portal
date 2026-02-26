@@ -92,6 +92,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                             selectedImage={null}
                             onSelectImage={() => { }}
                             isCurrent
+                            showBodyIndicator={true}
                             notesExpanded={notesExpanded}
                             onToggleNotes={toggleNotes}
                             onPreviewImage={setPreviewImageId}

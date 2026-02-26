@@ -11,7 +11,7 @@ export function DetailSection({
     last?: boolean
 }) {
     return (
-        <div className={cn("p-4", !last && "border-b border-border")}>
+        <div className={cn("relative p-4", !last && "border-b border-border")}>
             <p className="mb-3 text-[12px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {label}
             </p>

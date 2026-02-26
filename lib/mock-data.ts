@@ -1,4 +1,4 @@
-import { Visit, Patient, Area, Institution, DateGroup, Document as DocType } from "@/components/common/types"
+import { Visit, Patient, Area, Institution, DateGroup, Document as DocType, BodyIndicator } from "@/components/common/types"
 import { documents as mockDocs } from "@/components/documents-gallery/mock-data"
 import { photoGroups as mockPhotos } from "@/components/photo-album-gallery/mock-data"
 
@@ -97,7 +97,8 @@ function generateVisitEntry(
     visitIndex: number,
     historyLength: number,
     baseMeasurements: { width: number, length: number, depth: number },
-    rng: SeededRandom
+    rng: SeededRandom,
+    bodyIndicator?: BodyIndicator
 ): Visit {
     // Healing progress (randomized but generally decreasing)
     const progressFactor = Math.max(0.2, 1 - (visitIndex / Math.max(1, historyLength - 1)) * 0.8 + (rng.next() - 0.5) * 0.2);
@@ -107,7 +108,7 @@ function generateVisitEntry(
     const currentArea = (parseFloat(currentWidth) * parseFloat(currentLength)).toFixed(2);
 
     // Tissues (shifts toward granulation/epithelial over time)
-    const granulation = Math.floor(60 + visitIndex * 5);
+    const granulation = Math.min(100, Math.floor(60 + visitIndex * 5));
     const slough = 100 - granulation;
 
     const assessment = rng.pick([
@@ -159,6 +160,10 @@ function generateVisitEntry(
             doctor: rng.pick(doctors),
             time: `${rng.nextInt(8, 16)}:00`,
             camera: rng.pick(cameras),
+            woundLabel: woundType,
+            woundLocation: woundLocation,
+            issuingInstitution: rng.pick(mockAreas.flatMap(a => a.institutions)).name,
+            bodyIndicator: bodyIndicator,
             woundState: {
                 "Wound Bed": `${granulation}% granulation`,
                 "Exudate": rng.pick(["Serous", "Serosanguinous", "Purulent", "Sanguinous"]),
@@ -196,11 +201,31 @@ function generateSynchronizedPatientData(patientId: string, rng: SeededRandom) {
     const startDate = new Date(2025, 10, rng.nextInt(1, 28)); // Late 2025 start
 
     const potentialWounds = [
-        { type: "Pressure Injury", location: "Sacral Region" },
-        { type: "Venous Ulcer", location: "Left Lower Leg" },
-        { type: "Diabetic Foot Ulcer", location: "Right Heel" },
-        { type: "Surgical Site", location: "Abdominal" },
-        { type: "Pressure Injury", location: "Left Trochanter" }
+        {
+            type: "Pressure Injury",
+            location: "Sacral Region",
+            bodyIndicator: { view: 'back', marker: { x: 50, y: 72 } } as const
+        },
+        {
+            type: "Venous Ulcer",
+            location: "Left Lower Leg",
+            bodyIndicator: { view: 'back', marker: { x: 74, y: 88 } } as const
+        },
+        {
+            type: "Diabetic Foot Ulcer",
+            location: "Right Heel",
+            bodyIndicator: { view: 'back', marker: { x: 38, y: 96 } } as const
+        },
+        {
+            type: "Surgical Site",
+            location: "Abdominal",
+            bodyIndicator: { view: 'front', marker: { x: 50, y: 55 } } as const
+        },
+        {
+            type: "Pressure Injury",
+            location: "Left Trochanter",
+            bodyIndicator: { view: 'side', marker: { x: 45, y: 65 } } as const
+        }
     ];
 
     // Initial setup
@@ -221,7 +246,8 @@ function generateSynchronizedPatientData(patientId: string, rng: SeededRandom) {
                 width: rng.nextFloat() * 5 + 1,
                 length: rng.nextFloat() * 5 + 1,
                 depth: rng.nextFloat() * 2
-            }
+            },
+            bodyIndicator: w.bodyIndicator
         });
     }
 
@@ -244,7 +270,8 @@ function generateSynchronizedPatientData(patientId: string, rng: SeededRandom) {
                 i - w.appearanceVisitIndex,
                 visitsCount,
                 w.baseMeasurements,
-                rng
+                rng,
+                w.bodyIndicator
             );
 
             // Chance to heal
@@ -276,12 +303,13 @@ function generateSynchronizedPatientData(patientId: string, rng: SeededRandom) {
                     width: rng.nextFloat() * 5 + 1,
                     length: rng.nextFloat() * 5 + 1,
                     depth: rng.nextFloat() * 2
-                }
+                },
+                bodyIndicator: w.bodyIndicator
             });
 
             // Add initial entry for the newly discovered wound today
             const newWound = wounds[wounds.length - 1];
-            const entry = generateVisitEntry(patientId, dateStr, newWound.label, newWound.type, 0, visitsCount, newWound.baseMeasurements, rng);
+            const entry = generateVisitEntry(patientId, dateStr, newWound.label, newWound.type, 0, visitsCount, newWound.baseMeasurements, rng, newWound.bodyIndicator);
             newWound.history.push(entry);
         }
     }

@@ -62,7 +62,7 @@ export function MeasurementGraphic({
     }
 
     return (
-        <div className="flex flex-col gap-1.5 py-1">
+        <div className="flex flex-col">
             <div className="flex items-center justify-between h-[110px] relative">
                 {/* SVG Axis Visualization */}
                 <div className="relative flex-1 h-full min-w-0 pr-4">

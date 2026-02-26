@@ -12,6 +12,11 @@ export interface TissueSegment {
     color: string
 }
 
+export interface BodyIndicator {
+    view: 'front' | 'back' | 'side'
+    marker: { x: number; y: number } // Percentage [0, 100]
+}
+
 export interface WoundDetails {
     measurements: {
         length: string
@@ -23,10 +28,14 @@ export interface WoundDetails {
     woundState: Record<string, string>
     diagnosis: Record<string, string>
     materials: Record<string, string>
-    clinicalNotes: string
-    doctor: string
-    time: string
-    camera: string
+    clinicalNotes: string;
+    doctor: string;
+    time: string;
+    camera: string;
+    woundLabel?: string;
+    woundLocation?: string;
+    issuingInstitution?: string;
+    bodyIndicator?: BodyIndicator;
 }
 
 export interface Visit {
