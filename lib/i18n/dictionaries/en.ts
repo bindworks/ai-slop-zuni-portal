@@ -1,6 +1,8 @@
 export const en = {
     common: {
         patients: "Patients",
+        security: "Security",
+        timeline: "Timeline",
         select: "Select...",
         search: "Search by patient name or ID...",
         no_patients: "No patients found",
@@ -124,5 +126,21 @@ export const en = {
         week_other: "{{count}} weeks",
         day_earlier_one: "{{count}} day earlier",
         day_earlier_other: "{{count}} days earlier",
+    },
+    security: {
+        dashboard_title: "Security & Access Control",
+        dashboard_desc: "Manage system security, access logs, and user permissions.",
+        modules: {
+            devices: {
+                title: "Enrolled Devices",
+                desc: "Manage trusted hardware and mobile devices.",
+                summary: "active devices",
+            },
+            sessions: {
+                title: "Active Sessions",
+                desc: "Monitor currently active user connections.",
+                summary: "active now",
+            }
+        }
     }
 }

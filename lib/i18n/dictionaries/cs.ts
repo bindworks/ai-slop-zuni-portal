@@ -1,6 +1,8 @@
 export const cs = {
     common: {
         patients: "Pacienti",
+        security: "Zabezpečení",
+        timeline: "Časová osa",
         select: "Vybrat...",
         search: "Hledat podle jména nebo ID pacienta...",
         no_patients: "Žádní pacienti nenalezeni",
@@ -129,5 +131,21 @@ export const cs = {
         day_earlier_one: "o {{count}} den dříve",
         day_earlier_few: "o {{count}} dny dříve",
         day_earlier_other: "o {{count}} dní dříve",
+    },
+    security: {
+        dashboard_title: "Zabezpečení a přístup",
+        dashboard_desc: "Správa zabezpečení systému, protokolů přístupu a oprávnění uživatelů.",
+        modules: {
+            devices: {
+                title: "Registrovaná zařízení",
+                desc: "Správa důvěryhodného hardwaru a mobilních zařízení.",
+                summary: "aktivních zařízení",
+            },
+            sessions: {
+                title: "Aktivní relace",
+                desc: "Sledování aktuálně aktivních připojení uživatelů.",
+                summary: "právě aktivní",
+            }
+        }
     }
 }

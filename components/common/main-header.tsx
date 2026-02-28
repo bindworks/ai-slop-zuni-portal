@@ -32,6 +32,7 @@ export function MainHeader({ activeTab = "Patients" }: MainHeaderProps) {
 
     const navItems = [
         { label: t("common.patients"), href: "/patients", id: "Patients" },
+        { label: t("common.security"), href: "/security", id: "Security" },
     ] as const
 
     const toggleAreaExpand = (areaId: string, e: React.MouseEvent) => {

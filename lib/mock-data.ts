@@ -381,3 +381,10 @@ export const placeholderColors = [
     "from-primary/8 to-primary/18",
     "from-secondary to-accent/15",
 ];
+
+// --- Security Configuration ---
+export function getSecurityConfig() {
+    return {
+        enabledModules: ["devices", "sessions"]
+    };
+}
