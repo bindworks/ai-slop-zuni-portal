@@ -1,4 +1,4 @@
-import { WoundHistoryGallery } from "@/components/wound-history-gallery/wound-history-gallery"
+import { WoundHistoryGallery } from "@/src/components/wound-history-gallery/wound-history-gallery"
 import { useParams, Outlet } from "react-router-dom"
 
 export default function WoundLayout() {

@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { PhotoGroup } from "@/components/photo-album-gallery/photo-group"
-import { photoGroups } from "@/components/photo-album-gallery/mock-data"
+import { PhotoGroup } from "@/src/components/photo-album-gallery/photo-group"
+import { photoGroups } from "@/src/components/photo-album-gallery/mock-data"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function PhotoAlbumPage() {

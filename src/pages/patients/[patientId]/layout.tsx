@@ -1,7 +1,7 @@
-import { PatientPanel } from "@/components/patient-panel/patient-panel"
-import { MainHeader } from "@/components/common/main-header"
-import { mockPatients } from "@/lib/mock-data"
-import { UiLink } from "@/components/common/ui-link"
+import { PatientPanel } from "@/src/components/patient-panel/patient-panel"
+import { MainHeader } from "@/src/components/common/main-header"
+import { mockPatients } from "@/src/lib/mock-data"
+import { UiLink } from "@/src/components/common/ui-link"
 import { useLocation, useParams, Outlet } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 

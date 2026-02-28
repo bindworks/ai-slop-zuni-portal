@@ -1,5 +1,5 @@
-import { DocumentPreview } from "@/components/documents-gallery/document-preview"
-import { documents } from "@/components/documents-gallery/mock-data"
+import { DocumentPreview } from "@/src/components/documents-gallery/document-preview"
+import { documents } from "@/src/components/documents-gallery/mock-data"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function DocumentDetailPage() {

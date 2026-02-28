@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { TimelineList, TimelineEvent } from "@/components/timeline-gallery/timeline-list"
-import { mockPatients } from "@/lib/mock-data"
+import { TimelineList, TimelineEvent } from "@/src/components/timeline-gallery/timeline-list"
+import { mockPatients } from "@/src/lib/mock-data"
 import { useParams, Outlet } from "react-router-dom"
 
 export default function TimelineLayout() {

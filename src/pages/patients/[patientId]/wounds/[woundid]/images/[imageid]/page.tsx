@@ -1,5 +1,5 @@
-import { ImagePreview } from "@/components/image-preview/image-preview"
-import { getPatientHistory } from "@/lib/mock-data"
+import { ImagePreview } from "@/src/components/image-preview/image-preview"
+import { getPatientHistory } from "@/src/lib/mock-data"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function WoundImageDetailPage() {

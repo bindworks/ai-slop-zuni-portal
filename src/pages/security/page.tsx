@@ -1,8 +1,8 @@
 
 import { useTranslation } from "react-i18next"
-import { MainHeader } from "@/components/common/main-header"
-import { getEnabledModules } from "@/lib/security-modules"
-import { ModuleCard } from "@/components/security/module-card"
+import { MainHeader } from "@/src/components/common/main-header"
+import { getEnabledModules } from "@/src/lib/security-modules"
+import { ModuleCard } from "@/src/components/security/module-card"
 
 export default function Page() {
     const { t } = useTranslation()

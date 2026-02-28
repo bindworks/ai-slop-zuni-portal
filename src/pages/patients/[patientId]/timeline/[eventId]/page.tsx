@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { TimelineDetail } from "@/components/timeline-gallery/timeline-detail"
-import { mockPatients } from "@/lib/mock-data"
-import { TimelineEvent } from "@/components/timeline-gallery/timeline-list"
+import { TimelineDetail } from "@/src/components/timeline-gallery/timeline-detail"
+import { mockPatients } from "@/src/lib/mock-data"
+import { TimelineEvent } from "@/src/components/timeline-gallery/timeline-list"
 import { useParams } from "react-router-dom"
 
 export default function TimelineEventPage() {

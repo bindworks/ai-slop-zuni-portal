@@ -2,9 +2,9 @@ import { useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search, User, Activity, Filter, ChevronRight } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { cn } from "@/lib/utils"
-import { mockPatients } from "@/lib/mock-data"
-import { MainHeader } from "@/components/common/main-header"
+import { cn } from "@/src/lib/utils"
+import { mockPatients } from "@/src/lib/mock-data"
+import { MainHeader } from "@/src/components/common/main-header"
 
 export default function Page() {
     const { t } = useTranslation()

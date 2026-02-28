@@ -1,7 +1,7 @@
 "use client"
 
-import { DocumentRow } from "@/components/documents-gallery/document-row"
-import { documents } from "@/components/documents-gallery/mock-data"
+import { DocumentRow } from "@/src/components/documents-gallery/document-row"
+import { documents } from "@/src/components/documents-gallery/mock-data"
 import { useNavigate, useParams, Outlet } from "react-router-dom"
 
 export default function DocumentsLayout() {

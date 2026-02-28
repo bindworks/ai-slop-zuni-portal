@@ -1,9 +1,9 @@
 
 import { Shield, ShieldAlert, ArrowLeft, LogOut, MapPin, Globe, Clock, Monitor } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { MainHeader } from "@/components/common/main-header"
-import { UiLink } from "@/components/common/ui-link"
-
+import { MainHeader } from "@/src/components/common/main-header"
+import { UiLink } from "@/src/components/common/ui-link"
+import { cn } from "@/src/lib/utils"
 const mockSessions = [
     { id: "S-001", device: "Sarah's MacBook Pro", location: "Prague, CZ", ip: "192.168.1.45", browser: "Chrome 122", current: true },
     { id: "S-002", device: "iPhone 15 Pro", location: "Prague, CZ", ip: "192.168.1.102", browser: "Mobile Safari", current: false },

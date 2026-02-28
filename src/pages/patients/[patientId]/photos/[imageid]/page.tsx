@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from "react"
-import { ImagePreview } from "@/components/image-preview/image-preview"
-import { photoGroups } from "@/components/photo-album-gallery/mock-data"
+import { ImagePreview } from "@/src/components/image-preview/image-preview"
+import { photoGroups } from "@/src/components/photo-album-gallery/mock-data"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function PhotoDetailPage() {

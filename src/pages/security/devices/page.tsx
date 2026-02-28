@@ -1,10 +1,9 @@
 
 import { Monitor, Smartphone, Tablet, Laptop, Shield, ArrowLeft, Trash2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { MainHeader } from "@/components/common/main-header"
-import { UiLink } from "@/components/common/ui-link"
-import { cn } from "@/lib/utils"
-
+import { MainHeader } from "@/src/components/common/main-header"
+import { UiLink } from "@/src/components/common/ui-link"
+import { cn } from "@/src/lib/utils"
 const mockDevices = [
     { id: "DEV-001", name: "Sarah's MacBook Pro", type: "Laptop", lastActive: "2 minutes ago", status: "Trusted", icon: Laptop },
     { id: "DEV-002", name: "iPhone 15 Pro", type: "Mobile", lastActive: "Just now", status: "Trusted", icon: Smartphone },
