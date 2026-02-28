@@ -137,10 +137,7 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
                         <UiImage
                             src={src}
                             alt={alt}
-                            fill
-                            className="object-contain"
-                            priority
-                            draggable={false}
+                            className="w-full h-full object-contain"
                         />
                     </div>
                 </div>

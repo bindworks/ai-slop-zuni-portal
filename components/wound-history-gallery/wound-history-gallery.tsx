@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useNavigate } from "react-router-dom"
 import { VisitColumn } from "./visit-column"
 import { getPatientHistory } from "@/lib/mock-data"
 
@@ -17,13 +17,13 @@ export function WoundHistoryGallery({
     const historyVisits = visits.slice(1)
 
     const { imageid } = useParams()
-    const router = useRouter()
+    const navigate = useNavigate()
 
     const [notesExpanded, setNotesExpanded] = useState(false)
     const toggleNotes = useCallback(() => setNotesExpanded((v: boolean) => !v), [])
 
     const handlePreviewImage = (id: string | number) => {
-        router.push(`/patients/${patientId}/wounds/${woundId}/images/${id}`)
+        navigate(`/patients/${patientId}/wounds/${woundId}/images/${id}`)
     }
 
     return (

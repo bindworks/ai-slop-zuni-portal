@@ -27,8 +27,7 @@ export function PhotoGrid({ photos, onPreviewPhoto }: PhotoGridProps) {
                             <UiImage
                                 src={photo.src}
                                 alt={photo.caption}
-                                fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20 flex items-center justify-center">
                                 <div className="opacity-0 transition-opacity group-hover:opacity-100 rounded-full bg-background/90 p-2 text-foreground backdrop-blur-sm shadow-sm scale-125">

@@ -5,6 +5,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": [
+      "vite/client"
+    ],
     "allowJs": true,
     "target": "ES6",
     "skipLibCheck": true,
@@ -16,12 +19,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
@@ -29,13 +27,11 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

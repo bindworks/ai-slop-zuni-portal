@@ -1,8 +1,9 @@
-import Image, { ImageProps } from "next/image"
 import { prefixPath } from "@/lib/prefix-path"
+import { ImgHTMLAttributes } from "react"
 
-export function UiImage({ src, ...props }: ImageProps) {
+export function UiImage({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
     const prefixedSrc = typeof src === 'string' ? prefixPath(src) : src;
 
-    return <Image src={prefixedSrc} {...props} />
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={prefixedSrc} alt={alt} {...props} />
 }

@@ -24,8 +24,7 @@ export function DocumentRow({ doc, selected, onPreview }: { doc: Document, selec
                         <UiImage
                             src={doc.thumbnail}
                             alt={doc.title}
-                            fill
-                            className="object-cover transition-transform group-hover/thumb:scale-105"
+                            className="w-full h-full object-cover transition-transform group-hover/thumb:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/0 transition-colors group-hover/thumb:bg-black/20 flex items-center justify-center">
                             <div className="opacity-0 transition-opacity group-hover/thumb:opacity-100 rounded-full bg-background/90 p-1.5 text-foreground backdrop-blur-sm shadow-sm">

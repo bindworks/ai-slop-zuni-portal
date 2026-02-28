@@ -35,7 +35,7 @@ export function PhotoGroup({
                 </span>
             </div>
 
-            {/* Photo grid — Responsive auto-fill */}
+            {/* Photo grid — Responsive auto-*/}
             <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3">
                 {photos.map((photo) => {
                     return (
@@ -48,8 +48,7 @@ export function PhotoGroup({
                                     <UiImage
                                         src={photo.src}
                                         alt={photo.caption}
-                                        fill
-                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
                                     <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20 flex items-center justify-center pb-6">
                                         <div className="opacity-0 transition-opacity group-hover:opacity-100 rounded-full bg-background/90 p-1.5 text-foreground backdrop-blur-sm shadow-sm scale-150">

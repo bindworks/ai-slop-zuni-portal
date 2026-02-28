@@ -164,8 +164,7 @@ export function VisitColumn({
                                     visit.details.bodyIndicator.view === 'back' ? '/assets/panatchek_zezadu.png' :
                                         '/assets/panatchek_bok.png'}
                                 alt={t("wound.location")}
-                                fill
-                                className="object-contain brightness-110 p-1.5"
+                                className="w-full h-full object-contain brightness-110 p-1.5"
                             />
                             <div
                                 className="absolute w-4 h-4 bg-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,1)] border-2 border-white animate-pulse"

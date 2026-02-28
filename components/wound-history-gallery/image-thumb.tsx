@@ -35,8 +35,7 @@ export function ImageThumb({
                     <UiImage
                         src={img.src}
                         alt={img.tag}
-                        fill
-                        className="object-cover transition-transform group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20 flex items-center justify-center pb-4">
                         <div className="opacity-0 transition-opacity group-hover:opacity-100 rounded-full bg-background/90 p-1.5 text-foreground backdrop-blur-sm shadow-sm">

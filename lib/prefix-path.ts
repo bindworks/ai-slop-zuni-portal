@@ -1,15 +1,18 @@
 export function prefixPath(path: string): string {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+    // Vite provides BASE_URL which defaults to '/'
+    // If it's just '/', we don't want to prepend it to paths starting with '/' to avoid '//'
+    const baseUrl = import.meta.env.BASE_URL;
+    const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
     // If path is empty, already absolute (contains ://), or doesn't start with /
     if (!path || path.includes('://') || !path.startsWith('/')) {
         return path;
     }
 
-    // If path already starts with basePath, don't double-prefix
-    if (basePath && path.startsWith(basePath)) {
+    // If path already starts with base, don't double-prefix
+    if (base && path.startsWith(base)) {
         return path;
     }
 
-    return `${basePath}${path}`;
+    return `${base}${path}`;
 }

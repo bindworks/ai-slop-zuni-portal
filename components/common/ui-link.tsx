@@ -1,15 +1,11 @@
-import Link, { LinkProps } from "next/link"
-import { prefixPath } from "@/lib/prefix-path"
-import { ReactNode } from "react"
+import { Link, LinkProps } from "react-router-dom"
 
-interface UiLinkProps extends LinkProps {
-    children: ReactNode
-    className?: string
-    target?: string
-    rel?: string
-    title?: string
+interface UiLinkProps extends Omit<LinkProps, 'to'> {
+    href: string
 }
 
 export function UiLink({ href, ...props }: UiLinkProps) {
-    return <Link href={href} {...props} />
+    // React Router Link handles basename automatically via BrowserRouter context.
+    // We should not manually prefix internal routes here to avoid double-prefixing.
+    return <Link to={href} {...props} />
 }

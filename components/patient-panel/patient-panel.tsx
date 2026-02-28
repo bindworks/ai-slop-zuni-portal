@@ -4,7 +4,7 @@ import { User, Calendar, Hash, MapPin, AlertCircle, Image as ImageIcon, FileText
 import { PanelListItem } from "../common/panel-list-item"
 import { Patient, Visit } from "@/components/common/types"
 import { useTranslation } from "react-i18next"
-import { useParams } from "next/navigation"
+import { useParams } from "react-router-dom"
 
 /* ── Main component ── */
 
