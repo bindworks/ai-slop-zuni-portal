@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { UiImage } from "@/components/common/ui-image"
 import { Eye } from "lucide-react"
 
 interface Photo {
@@ -24,7 +24,7 @@ export function PhotoGrid({ photos, onPreviewPhoto }: PhotoGridProps) {
                         className="overflow-hidden rounded-xl border border-border bg-card transition-all hover:ring-2 hover:ring-primary/40 cursor-pointer shadow-sm"
                     >
                         <div className="relative aspect-square">
-                            <Image
+                            <UiImage
                                 src={photo.src}
                                 alt={photo.caption}
                                 fill

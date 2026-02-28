@@ -1,5 +1,8 @@
-import Image from "next/image"
+"use client"
+
+import { UiImage } from "@/components/common/ui-image"
 import { Calendar, Eye } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/lib/utils"
 import { Photo } from "../common/types"
 
@@ -12,13 +15,14 @@ export function PhotoGroup({
     photos: Photo[]
     onPreviewPhoto: (id: string | number) => void
 }) {
+    const { t, i18n } = useTranslation()
     return (
-        <div>
+        <div className="text-left">
             {/* Date separator */}
             <div className="mb-3 flex items-center gap-2">
                 <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
                 <span className="text-xs font-semibold text-muted-foreground">
-                    {new Date(date + "T00:00:00").toLocaleDateString("en-US", {
+                    {new Date(date + "T00:00:00").toLocaleDateString(i18n.language, {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
@@ -27,7 +31,7 @@ export function PhotoGroup({
                 </span>
                 <div className="flex-1 border-t border-border" />
                 <span className="text-[11px] text-muted-foreground">
-                    {photos.length} photo{photos.length !== 1 ? "s" : ""}
+                    {t("plural.photo", { count: photos.length })}
                 </span>
             </div>
 
@@ -41,7 +45,7 @@ export function PhotoGroup({
                                 className="overflow-hidden rounded-xl border border-border bg-card transition-all hover:ring-2 hover:ring-primary/40 cursor-pointer"
                             >
                                 <div className="relative aspect-square">
-                                    <Image
+                                    <UiImage
                                         src={photo.src}
                                         alt={photo.caption}
                                         fill

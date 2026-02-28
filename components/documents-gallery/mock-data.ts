@@ -9,7 +9,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-10",
         datePhoto: "2026-02-10",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Comprehensive wound assessment documenting a venous ulcer on the left lower leg, including wound dimensions, depth, and wound bed composition. Documents the state of granulation tissue, exudate levels, and periwound skin condition. Includes notes on ongoing compression therapy tolerance and recommendations for care plan continuation with scheduled re-evaluation. Patient-reported pain trends are also recorded.",
         issuingInstitution: "Zuni Medical Center",
@@ -22,7 +22,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-28",
         datePhoto: "2026-01-28",
         thumbnail: scanImages[1],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Complete blood count results within normal limits, covering white and red blood cell counts, hemoglobin, hematocrit, and platelets. CRP slightly elevated suggesting mild systemic inflammation consistent with chronic wound. ESR measured. Recommendation for repeat testing included.",
         issuingInstitution: "Central City Hospital",
@@ -35,7 +35,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-20",
         datePhoto: "2026-01-19",
         thumbnail: scanImages[2],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Bilateral lower extremity venous duplex scan results. Documents patency of deep venous system, presence or absence of DVT, and saphenous vein competency with reflux measurements. Includes arterial ABI assessment bilaterally. Confirms superficial venous insufficiency correlating with wound location. Recommendations for compression therapy and potential endovenous ablation are included.",
         issuingInstitution: "Westside General Hospital",
@@ -48,7 +48,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-22",
         datePhoto: "2026-01-22",
         thumbnail: scanImages[4],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Referral to vascular surgery for evaluation of chronic venous insufficiency and non-healing venous ulcer. Documents ulcer duration and suboptimal response to compression therapy alone.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -61,7 +61,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-05",
         datePhoto: "2026-02-05",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Nutritional screening results including BMI classification, prealbumin levels indicating protein status, and vitamin and mineral assessments. Documents caloric intake relative to wound healing requirements. Includes initiated oral nutritional supplement plan with high protein recommendations and scheduled follow-up for reassessment.",
         issuingInstitution: "Zuni Medical Center",
@@ -74,7 +74,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-25",
         datePhoto: "2026-01-24",
         thumbnail: scanImages[1],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Wound swab culture results from left lower leg ulcer documenting bacterial growth, antibiotic sensitivity profile, and absence of resistant organisms. Includes recommendations for topical antimicrobial dressing and assessment of systemic antibiotic necessity.",
         issuingInstitution: "Central City Hospital",
@@ -87,7 +87,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-18",
         datePhoto: "2026-01-18",
         thumbnail: scanImages[3],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Four-layer compression bandaging protocol documenting application technique, target resting pressure range, and overlap specifications. Includes patient education notes on daily activity and limb elevation. Documents ABI confirmation for contraindication clearance and rebandaging schedule.",
         issuingInstitution: "Westside General Hospital",
@@ -100,7 +100,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-01",
         datePhoto: "2026-02-01",
         thumbnail: scanImages[4],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Current medication review listing all active prescriptions with dosages and frequency. Documents assessment of drug interactions affecting wound healing. Includes recommendations for additional medications to enhance microcirculation and zinc supplementation based on nutritional status.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -113,7 +113,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-04",
         datePhoto: "2026-02-04",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Wound progress note documenting area reduction since initial assessment, granulation tissue improvement, and slough reduction. Notes decreasing exudate levels and corresponding dressing change. Documents patient compliance with compression therapy and improving pain scores.",
         issuingInstitution: "Zuni Medical Center",
@@ -126,7 +126,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-15",
         datePhoto: "2026-01-15",
         thumbnail: scanImages[2],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Diabetes management plan documenting HbA1c levels and glycemic control assessment. Includes fasting glucose trends, medication dosage adjustments, and self-monitoring blood glucose log review. Documents dietary counseling and target glycemic goals to support wound healing with scheduled recheck.",
         issuingInstitution: "Central City Hospital",
@@ -139,7 +139,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-21",
         datePhoto: "2026-01-21",
         thumbnail: scanImages[3],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Informed consent documentation for sharp debridement of necrotic wound tissue. Lists explained risks including pain, bleeding, and potential tissue damage. Confirms patient understanding and signed consent.",
         issuingInstitution: "Westside General Hospital",
@@ -152,7 +152,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-30",
         datePhoto: "2026-01-30",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Lower limb mobility assessment documenting ankle dorsiflexion range and calf muscle pump function. Includes comparison between affected and unaffected sides. Prescribed exercise programme covering ankle range-of-motion, toe raises, and graduated walking to improve venous return through muscle pump activation.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -165,7 +165,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-11",
         datePhoto: "2026-02-11",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Wound progress note documenting continued area reduction and wound bed granulation improvement. Notes minimal exudate, intact periwound skin, and maintained compression therapy. Documents near-complete pain resolution and visible epithelialization at wound edges with projected closure timeline.",
         issuingInstitution: "Zuni Medical Center",
@@ -178,7 +178,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-12",
         datePhoto: "2026-02-12",
         thumbnail: scanImages[4],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Discharge planning documentation including community nurse referral for ongoing wound care and compression hosiery order. Documents completed patient education on self-care, skin inspection, and infection signs. Includes scheduled GP follow-up and provided educational materials.",
         issuingInstitution: "Central City Hospital",
@@ -191,7 +191,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-19",
         datePhoto: "2026-01-19",
         thumbnail: scanImages[2],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Radiographic assessment of the left lower leg with standard views. Documents absence of fractures, bony erosion, and foreign bodies. Notes soft tissue swelling consistent with known ulcer and confirms no signs of osteomyelitis.",
         issuingInstitution: "Westside General Hospital",
@@ -204,7 +204,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-26",
         datePhoto: "2026-01-26",
         thumbnail: scanImages[3],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Wound-related pain management plan using validated assessment tools. Documents background and procedural pain levels. Includes initiated topical anaesthetic protocol for dressing changes, baseline oral analgesia, and notes on medications to avoid due to healing considerations.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -217,7 +217,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-03",
         datePhoto: "2026-02-03",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Specialist tissue viability review documenting positive wound trajectory with consistent area reduction. Confirms current dressing regimen appropriateness and recommends collagen matrix dressing trial to accelerate granulation. Notes continuation of compression and assessment of negative pressure wound therapy indication.",
         issuingInstitution: "Zuni Medical Center",
@@ -230,7 +230,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-14",
         datePhoto: "2026-01-14",
         thumbnail: scanImages[3],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Allergy documentation recording specific drug allergy with reaction type and severity classification. Documents confirmed cross-reactivity with related medications and lists safe alternatives. Notes patient alert bracelet status and electronic health record flag updates.",
         issuingInstitution: "Central City Hospital",
@@ -243,7 +243,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-14",
         datePhoto: "2026-02-14",
         thumbnail: scanImages[1],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Serial wound measurement log tracking dimensions and calculated area over multiple weeks. Documents a consistent linear healing trajectory across all recorded visits. Includes projected wound closure timeline based on current healing rate.",
         issuingInstitution: "Westside General Hospital",
@@ -256,7 +256,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-07",
         datePhoto: "2026-02-07",
         thumbnail: scanImages[4],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Multidisciplinary team meeting notes listing attendees across specialties. Documents consensus on wound healing progression and agreement to continue current compression and dressing regimen. Includes recommendations for glycemic optimization, vascular intervention assessment, and discharge planning initiation.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -269,7 +269,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-17",
         datePhoto: "2026-01-17",
         thumbnail: scanImages[3],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Leg elevation protocol documentation specifying target elevation frequency, duration, and positioning. Includes prescribed ankle exercises during elevation sessions and night-time elevation arrangements. Documents provided equipment and positioning aids.",
         issuingInstitution: "Zuni Medical Center",
@@ -282,7 +282,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-08",
         datePhoto: "2026-02-08",
         thumbnail: scanImages[1],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Follow-up wound swab culture results confirming clearance of previously identified organisms with topical antimicrobial therapy. Documents normalized inflammatory markers and absence of clinical infection signs. Includes dressing protocol change from antimicrobial to simple non-adherent contact layer.",
         issuingInstitution: "Central City Hospital",
@@ -295,7 +295,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-06",
         datePhoto: "2026-02-06",
         thumbnail: scanImages[4],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Patient education record documenting completed session topics including wound self-assessment techniques, infection warning signs, compression hosiery application and care, skin moisturizing regimen, dietary recommendations for wound healing, and guidance on when to contact healthcare providers.",
         issuingInstitution: "Westside General Hospital",
@@ -308,7 +308,7 @@ export const documents: Document[] = [
         dateIssued: "2026-01-16",
         datePhoto: "2026-01-16",
         thumbnail: scanImages[2],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Insurance pre-authorization documentation covering approved supplies and procedures including compression bandaging system, wound care dressings, diagnostic imaging, and specialist consultation. Includes authorization validity period and reference information.",
         issuingInstitution: "Oak Tree Medical Center",
@@ -321,7 +321,7 @@ export const documents: Document[] = [
         dateIssued: "2026-02-18",
         datePhoto: "2026-02-18",
         thumbnail: scanImages[0],
-        url: "/sample.pdf",
+        url: "/assets/sample.pdf",
         summary:
             "Wound progress note documenting significant area reduction with active epithelialization advancing from margins. Wound bed fully granulated with no slough or necrotic tissue. Documents minimal exudate, healthy peri-wound skin, and transition to maintenance compression hosiery. Notes reduced dressing change frequency and patient independence with hosiery application.",
         issuingInstitution: "Zuni Medical Center",

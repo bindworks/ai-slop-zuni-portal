@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Calendar, Camera, FileText, HeartPulse } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/lib/utils"
 import { Patient } from "../common/types"
 import { TimelineDetail } from "./timeline-detail"
@@ -17,6 +18,7 @@ interface TimelineEvent {
 }
 
 export function TimelineGallery({ patient }: { patient: Patient }) {
+    const { t, i18n } = useTranslation()
     const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
 
     const events = useMemo(() => {
@@ -31,7 +33,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                     dateStr: visit.date,
                     type: 'visit',
                     title: wound.label,
-                    description: `${visit.images.length} photos, ${wound.type}`,
+                    description: `${visit.images.length} ${t("gallery.photo", { count: visit.images.length }).toLowerCase()}, ${wound.type}`,
                     sourceId: wound.id
                 })
             })
@@ -57,15 +59,15 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                 date: new Date(group.date),
                 dateStr: group.date,
                 type: 'photos',
-                title: "Photos",
-                description: `${group.photos.length} photos taken`,
+                title: t("gallery.photo", { count: 2 }), // "Photos"
+                description: `${group.photos.length} ${t("gallery.photo", { count: group.photos.length }).toLowerCase()}`,
                 sourceId: group.date
             })
         })
 
         // Sort descending
         return allEvents.sort((a, b) => b.date.getTime() - a.date.getTime())
-    }, [patient])
+    }, [patient, t])
 
     // Set initial selection
     useMemo(() => {
@@ -89,10 +91,10 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                 <div className="border-b border-border px-6 py-4 shrink-0">
                     <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
                         <span className="text-base leading-none">🗓️</span>
-                        Timeline
+                        {t("patient.timeline")}
                     </h2>
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                        Chronological patient history
+                        {t("gallery.chronological_history")}
                     </p>
                 </div>
 
@@ -134,7 +136,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                                                 <div className="mb-2 flex items-center gap-2">
                                                     <div className="ms-9 h-px w-2 bg-amber-400/40" />
                                                     <span className="text-[10px] font-bold uppercase tracking-widest text-amber-500/90 italic">
-                                                        {dayDiff} days earlier
+                                                        {t("plural.day_earlier", { count: dayDiff })}
                                                     </span>
                                                 </div>
                                             )
@@ -148,7 +150,7 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                                             <div className="w-[2.5rem] shrink-0 text-right pt-2">
                                                 {showDate && (
                                                     <span className="text-[10px] font-bold text-amber-500/80 uppercase tracking-tighter leading-none">
-                                                        {new Date(event.dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+                                                        {new Date(event.dateStr).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })}
                                                     </span>
                                                 )}
                                             </div>
@@ -210,8 +212,8 @@ export function TimelineGallery({ patient }: { patient: Patient }) {
                             <div className="h-12 w-12 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4 opacity-50">
                                 <span className="text-2xl leading-none">🗓️</span>
                             </div>
-                            <p className="text-sm font-medium">Select an event</p>
-                            <p className="text-xs opacity-70 mt-1 uppercase tracking-wider">to view clinical details</p>
+                            <p className="text-sm font-medium">{t("gallery.select_event")}</p>
+                            <p className="text-xs opacity-70 mt-1 uppercase tracking-wider">{t("gallery.view_clinical_details")}</p>
                         </div>
                     </div>
                 )}

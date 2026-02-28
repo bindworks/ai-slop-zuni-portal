@@ -1,11 +1,13 @@
 "use client"
 
 import { useState, useMemo, useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { ImagePreview } from "../image-preview/image-preview"
 import { PhotoGroup } from "./photo-group"
 import { photoGroups } from "./mock-data"
 
 export function PhotoAlbumGallery() {
+    const { t } = useTranslation()
     const [previewPhotoId, setPreviewPhotoId] = useState<string | number | null>(null)
 
     // Flatten all photos for easy navigation
@@ -30,10 +32,10 @@ export function PhotoAlbumGallery() {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="border-b border-border px-6 py-4">
-                <h2 className="text-sm font-semibold text-foreground">📸 Photo Album</h2>
+            <div className="border-b border-border px-6 py-4 text-left">
+                <h2 className="text-sm font-semibold text-foreground">📸 {t("patient.photo_album")}</h2>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                    {totalPhotos} photos across {photoGroups.length} dates
+                    {t("gallery.photos_across", { totalPhotos: totalPhotos, datesCount: photoGroups.length })}
                 </p>
             </div>
             <div className="flex-1 overflow-y-auto p-4 text-left">

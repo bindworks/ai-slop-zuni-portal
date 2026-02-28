@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Calendar, Camera, ChevronDown, ChevronUp, Eye, Building2, UserRound } from "lucide-react"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
+import { UiImage } from "@/components/common/ui-image"
 import { Document } from "../common/types"
 
 export function DocumentRow({ doc, selected, onPreview }: { doc: Document, selected?: boolean, onPreview?: () => void }) {
@@ -21,7 +21,7 @@ export function DocumentRow({ doc, selected, onPreview }: { doc: Document, selec
                         onClick={onPreview}
                         className="group/thumb relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
                     >
-                        <Image
+                        <UiImage
                             src={doc.thumbnail}
                             alt={doc.title}
                             fill

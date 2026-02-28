@@ -1,5 +1,7 @@
+import { UiImage } from "@/components/common/ui-image"
 import { useRef, useCallback } from "react"
 import { Clock, Camera, Building2, MapPin, Activity, User } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/lib/utils"
 import { Visit } from "../common/types"
 import { MiniStat } from "../common/mini-stat"
@@ -24,19 +26,6 @@ const WOUND_STATE_KEYS = [
 const DIAGNOSIS_KEYS = ["Diagnosis", "Classification", "Etiology", "Treatment Plan", "Frequency", "Debridement"]
 
 const MATERIAL_KEYS = ["Primary Dressing", "Secondary Dressing", "Compression", "Skin Protectant", "Cleanser"]
-
-function getRelativeTime(dateStr: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const targetDate = new Date(dateStr);
-    targetDate.setHours(0, 0, 0, 0);
-    const diffTime = today.getTime() - targetDate.getTime();
-    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays <= 0) return "Today";
-    if (diffDays === 1) return "1 day ago";
-    return `${diffDays} days ago`;
-}
 
 export function VisitColumn({
     visit,
@@ -65,6 +54,20 @@ export function VisitColumn({
     valueAlign?: 'left' | 'right'
     showBodyIndicator?: boolean
 }) {
+    const { t } = useTranslation()
+
+    const getRelativeTime = useCallback((dateStr: string) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const targetDate = new Date(dateStr);
+        targetDate.setHours(0, 0, 0, 0);
+        const diffTime = today.getTime() - targetDate.getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays <= 0) return t("gallery.today");
+        return t("gallery.day_ago", { count: diffDays });
+    }, [t])
+
     return (
         <div className={cn(
             "flex h-fit min-h-full flex-col border-r border-border transition-colors",
@@ -91,12 +94,12 @@ export function VisitColumn({
                 <div className="shrink-0 space-y-0.5 border-b border-border px-4 py-1.5">
                     <div className="flex items-center gap-1.5 text-[10px]">
                         <span className="font-semibold text-foreground text-[11px]">
-                            {visit.details.woundLabel || "Wound"}
+                            {visit.details.woundLabel || t("wound.label")}
                         </span>
                         <span className="text-border">·</span>
                         <div className="flex items-center gap-1 text-muted-foreground">
                             <MapPin className="h-2.5 w-2.5 shrink-0" />
-                            <span>{visit.details.woundLocation || "Location"}</span>
+                            <span>{visit.details.woundLocation || t("wound.location")}</span>
                         </div>
                     </div>
 
@@ -108,7 +111,7 @@ export function VisitColumn({
                         <span className="text-border">·</span>
                         <div className="flex items-center gap-1 truncate">
                             <Building2 className="h-2.5 w-2.5 shrink-0" />
-                            <span className="truncate max-w-[10rem]">{visit.details.issuingInstitution || "Medical Center"}</span>
+                            <span className="truncate max-w-[10rem]">{visit.details.issuingInstitution || "Hospital"}</span>
                         </div>
                     </div>
 
@@ -146,7 +149,7 @@ export function VisitColumn({
             <div className="flex-1 pb-6">
 
                 {/* Measurements section */}
-                <DetailSection label="Measurements">
+                <DetailSection label={t("gallery.measurements")}>
                     <div className={cn(showBodyIndicator && visit.details.bodyIndicator ? "pr-28" : "")}>
                         <MeasurementGraphic
                             measurements={visit.details.measurements}
@@ -156,12 +159,13 @@ export function VisitColumn({
                     </div>
                     {showBodyIndicator && visit.details.bodyIndicator && (
                         <div className="absolute bottom-6 right-4 top-10 w-24 shrink-0 flex items-center justify-center bg-white rounded-lg shadow-[0_0_12px_rgba(255,255,255,0.25),0_15px_50px_rgba(30,58,138,0.35)] border border-black/10 p-1.5 overflow-hidden">
-                            <img
-                                src={visit.details.bodyIndicator.view === 'front' ? '/panatchek_zepredu.png' :
-                                    visit.details.bodyIndicator.view === 'back' ? '/panatchek_zezadu.png' :
-                                        '/panatchek_bok.png'}
-                                alt="Body location"
-                                className="h-full w-auto object-contain brightness-110"
+                            <UiImage
+                                src={visit.details.bodyIndicator.view === 'front' ? '/assets/panatchek_zepredu.png' :
+                                    visit.details.bodyIndicator.view === 'back' ? '/assets/panatchek_zezadu.png' :
+                                        '/assets/panatchek_bok.png'}
+                                alt={t("wound.location")}
+                                fill
+                                className="object-contain brightness-110 p-1.5"
                             />
                             <div
                                 className="absolute w-4 h-4 bg-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,1)] border-2 border-white animate-pulse"
@@ -176,7 +180,7 @@ export function VisitColumn({
                 </DetailSection>
 
                 {/* Clinical Notes */}
-                <DetailSection label="Clinical Notes">
+                <DetailSection label={t("gallery.clinical_notes")}>
                     <div
                         className="cursor-pointer rounded-lg bg-muted p-3 transition-colors hover:bg-muted/80"
                         onClick={onToggleNotes}
@@ -193,38 +197,38 @@ export function VisitColumn({
                                 <span>{visit.details.doctor} &middot; {visit.date}</span>
                             </div>
                             <span className="text-[11px] text-primary/60">
-                                {notesExpanded ? "collapse" : "expand"}
+                                {notesExpanded ? t("gallery.collapse") : t("gallery.expand")}
                             </span>
                         </div>
                     </div>
                 </DetailSection>
 
                 {/* Wound State Assessment */}
-                <DetailSection label="Wound State">
+                <DetailSection label={t("gallery.wound_state")}>
                     <div className="flex flex-col gap-1">
                         {WOUND_STATE_KEYS.map((k, index) => {
                             const v = visit.details.woundState[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
+                            return <DetailRow key={k} label={t(`wound_state_keys.${k}`)} value={v} prevValue={previousVisit?.details.woundState[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>
 
                 {/* Diagnosis & Treatment */}
-                <DetailSection label="Diagnosis & Treatment">
+                <DetailSection label={t("gallery.diagnosis_treatment")}>
                     <div className="flex flex-col gap-1">
                         {DIAGNOSIS_KEYS.map((k, index) => {
                             const v = visit.details.diagnosis[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
+                            return <DetailRow key={k} label={t(`diagnosis_keys.${k}`)} value={v} prevValue={previousVisit?.details.diagnosis[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>
 
                 {/* Materials Used */}
-                <DetailSection label="Materials Used" last>
+                <DetailSection label={t("gallery.materials_used")} last>
                     <div className="flex flex-col gap-1">
                         {MATERIAL_KEYS.map((k, index) => {
                             const v = visit.details.materials[k] || "—"
-                            return <DetailRow key={k} label={k} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
+                            return <DetailRow key={k} label={t(`material_keys.${k}`)} value={v} prevValue={previousVisit?.details.materials[k]} showLabel={isCurrent} even={index % 2 === 0} valueAlign={valueAlign} />
                         })}
                     </div>
                 </DetailSection>

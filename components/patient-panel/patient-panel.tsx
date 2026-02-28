@@ -1,20 +1,10 @@
 "use client"
 
-import { User, Calendar, Hash, MapPin, AlertCircle, Image as ImageIcon } from "lucide-react"
+import { User, Calendar, Hash, MapPin, AlertCircle, Image as ImageIcon, FileText } from "lucide-react"
 import { PanelListItem } from "../common/panel-list-item"
 import { Patient, Visit } from "@/components/common/types"
-
-/* ── Helpers ── */
-
-const getHealedDuration = (history: Visit[]) => {
-  if (history.length < 2) return "1 week";
-  // history is sorted desc (newest first)
-  const end = new Date(history[0].date);
-  const start = new Date(history[history.length - 1].date);
-  const diffTime = Math.abs(end.getTime() - start.getTime());
-  const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
-  return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""}`;
-};
+import { useTranslation } from "react-i18next"
+import { useParams } from "next/navigation"
 
 /* ── Main component ── */
 
@@ -27,10 +17,22 @@ export function PatientPanel({
   selectedItem: string | null
   onSelectItem: (id: string) => void
 }) {
+  const { t } = useTranslation()
+  const params = useParams()
+  const woundId = params?.woundid as string
+
+  const getHealedDuration = (history: Visit[]) => {
+    if (history.length < 2) return t("plural.week", { count: 1 });
+    const first = new Date(history[0].date);
+    const last = new Date(history[history.length - 1].date);
+    const diffWeeks = Math.ceil(Math.abs(last.getTime() - first.getTime()) / (1000 * 60 * 60 * 24 * 7));
+    return t("plural.week", { count: diffWeeks });
+  };
+
   if (!patient) {
     return (
       <aside className="relative flex h-full flex-col border-r border-border bg-card p-5">
-        <p className="text-sm text-muted-foreground">Patient data not available</p>
+        <p className="text-sm text-muted-foreground">{t("patient.data_missing")}</p>
       </aside>
     )
   }
@@ -47,26 +49,26 @@ export function PatientPanel({
             <h2 className="text-sm font-semibold text-foreground">
               {patient.name}
             </h2>
-            <p className="text-xs text-muted-foreground">MRN: {patient.mrn}</p>
+            <p className="text-xs text-muted-foreground">{t("patient.mrn")}: {patient.mrn}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-1.5 text-muted-foreground">
             <Calendar className="h-3.5 w-3.5" />
-            <span>DOB: {patient.dob}</span>
+            <span>{t("patient.dob")}: {patient.dob}</span>
           </div>
           <div className="flex items-center gap-1.5 text-muted-foreground">
             <Hash className="h-3.5 w-3.5" />
-            <span>Age: {patient.age}</span>
+            <span>{t("patient.age")}: {patient.age}</span>
           </div>
           <div className="flex items-center gap-1.5 text-muted-foreground">
             <MapPin className="h-3.5 w-3.5" />
-            <span>Room 412-B</span>
+            <span>{t("patient.room")} 412-B</span>
           </div>
           <div className="flex items-center gap-1.5 text-muted-foreground">
             <AlertCircle className="h-3.5 w-3.5" />
-            <span>Diabetic</span>
+            <span>{t("patient.diabetic")}</span>
           </div>
         </div>
       </div>
@@ -74,14 +76,14 @@ export function PatientPanel({
       {/* Allergies / Alerts */}
       <div className="border-b border-border px-5 py-3">
         <p className="text-[12px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Alerts
+          {t("patient.alerts")}
         </p>
         <div className="mt-1.5 flex flex-wrap gap-1.5">
           <span className="rounded-md bg-red-900/40 px-2 py-0.5 text-[13px] font-medium text-red-400">
-            Penicillin Allergy
+            {t("patient.penicillin_allergy")}
           </span>
           <span className="rounded-md bg-amber-900/40 px-2 py-0.5 text-[13px] font-medium text-amber-400">
-            Fall Risk
+            {t("patient.fall_risk")}
           </span>
         </div>
       </div>
@@ -92,24 +94,24 @@ export function PatientPanel({
         <PanelListItem
           id="TIMELINE"
           icon="🗓️"
-          label="Timeline"
-          subtitle="Patient care history"
+          label={t("patient.timeline")}
+          subtitle={t("patient.care_history")}
           selected={selectedItem === "TIMELINE"}
           href={`/patients/${patient.id}/timeline`}
         />
         <PanelListItem
           id="DOCUMENTS"
           icon="🗂️"
-          label="Documents (12)"
-          subtitle="Medical records & reports"
+          label={`${t("patient.documents")} (12)`}
+          subtitle={t("patient.med_records_reports")}
           selected={selectedItem === "DOCUMENTS"}
           href={`/patients/${patient.id}/documents`}
         />
         <PanelListItem
           id="OTHER"
           icon="📸"
-          label="Photo Album (20)"
-          subtitle="General photos & media"
+          label={`${t("patient.photo_album")} (20)`}
+          subtitle={t("patient.general_photos_media")}
           selected={selectedItem === "OTHER"}
           href={`/patients/${patient.id}/photos`}
         />
@@ -117,7 +119,7 @@ export function PatientPanel({
         {/* Wounds */}
         <div className="pt-2">
           <p className="mb-1 px-2 text-[12px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Wounds ({patient.wounds?.length || 0})
+            {t("patient.wounds")} ({patient.wounds?.length || 0})
           </p>
           <div className="flex flex-col">
             {[...(patient.wounds || [])]
@@ -127,6 +129,7 @@ export function PatientPanel({
                 return 0
               })
               .map((wound) => {
+                const isHealed = wound.status === "Healed"
                 // DO NOT TOUCH THE WOUND ICON (icon prop) BELOW - Manually fixed (UTF-32)
                 return (
                   <PanelListItem
@@ -134,25 +137,17 @@ export function PatientPanel({
                     id={wound.id}
                     icon="❤️‍🩹"
                     label={wound.label}
-                    subtitle={wound.type}
-                    status={wound.status}
+                    subtitle={isHealed ? `${t("patient.healed")} • ${getHealedDuration(wound.history)}` : `${t("patient.duration")}: ${getHealedDuration(wound.history)}`}
+                    status={t(`patient.status_${wound.status.toLowerCase()}`, { defaultValue: wound.status })}
                     meta={
                       <div className="flex items-center gap-1.5 leading-none">
-                        <ImageIcon className="h-3 w-3" />
+                        <ImageIcon className="h-3.5 w-3.5" />
                         <span>{wound.imageCount}</span>
-                        <span className="opacity-40 ml-1">
-                          {wound.status === "Healed" ? "⮜┈⮞" : "╰┈⮞"}
-                        </span>
-                        <span>
-                          {wound.status === "Healed"
-                            ? getHealedDuration(wound.history)
-                            : wound.date}
-                        </span>
                       </div>
                     }
-                    selected={selectedItem === wound.id}
+                    selected={woundId === wound.id}
+                    isHealed={isHealed}
                     href={`/patients/${patient.id}/wounds/${wound.id}`}
-                    isHealed={wound.status === "Healed"}
                   />
                 )
               })}

@@ -6,7 +6,8 @@ import { PhotoGrid } from "../photo-album-gallery/photo-grid"
 import { Patient } from "../common/types"
 import { useState, useCallback } from "react"
 import { ImagePreview } from "../image-preview/image-preview"
-import Link from "next/link"
+import { UiLink } from "@/components/common/ui-link"
+import { useTranslation } from "react-i18next"
 
 interface TimelineDetailProps {
     type: 'visit' | 'document' | 'photos'
@@ -16,6 +17,7 @@ interface TimelineDetailProps {
 }
 
 export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDetailProps) {
+    const { t, i18n } = useTranslation()
     const [previewImageId, setPreviewImageId] = useState<number | string | null>(null)
     const [notesExpanded, setNotesExpanded] = useState(false)
     const toggleNotes = useCallback(() => setNotesExpanded((v: boolean) => !v), [])
@@ -40,7 +42,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
 
                         {/* Next Next (Newest) - Far Left */}
                         {nextNextVisit ? (
-                            <Link
+                            <UiLink
                                 href={`/patients/${patient.id}/timeline/visit-${sourceId}-${nextNextVisit.date}`}
                                 className="w-[16rem] shrink-0 opacity-20 grayscale-[0.8] bg-card/30 hover:opacity-80 hover:grayscale-0 transition-all cursor-pointer block"
                             >
@@ -56,14 +58,14 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     onPreviewImage={() => { }}
                                     valueAlign="right"
                                 />
-                            </Link>
+                            </UiLink>
                         ) : (
                             <div className="w-[16rem] shrink-0 opacity-20 pointer-events-none grayscale-[0.8] bg-card/30" />
                         )}
 
                         {/* Next (Newer) - Left */}
                         {nextVisit ? (
-                            <Link
+                            <UiLink
                                 href={`/patients/${patient.id}/timeline/visit-${sourceId}-${nextVisit.date}`}
                                 className="w-[16rem] shrink-0 opacity-40 grayscale-[0.5] bg-card/30 hover:opacity-80 hover:grayscale-0 transition-all cursor-pointer block"
                             >
@@ -79,7 +81,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     onPreviewImage={() => { }}
                                     valueAlign="right"
                                 />
-                            </Link>
+                            </UiLink>
                         ) : (
                             <div className="w-[16rem] shrink-0 opacity-40 pointer-events-none grayscale-[0.5] bg-card/30" />
                         )}
@@ -100,7 +102,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
 
                         {/* Previous (Older) - Right */}
                         {previousVisit ? (
-                            <Link
+                            <UiLink
                                 href={`/patients/${patient.id}/timeline/visit-${sourceId}-${previousVisit.date}`}
                                 className="w-[16rem] shrink-0 opacity-40 grayscale-[0.5] bg-card/30 hover:opacity-80 hover:grayscale-0 transition-all cursor-pointer block"
                             >
@@ -116,14 +118,14 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     onPreviewImage={() => { }}
                                     valueAlign="left"
                                 />
-                            </Link>
+                            </UiLink>
                         ) : (
                             <div className="w-[16rem] shrink-0 opacity-40 pointer-events-none grayscale-[0.5] bg-card/30" />
                         )}
 
                         {/* Previous Previous (Oldest) - Far Right */}
                         {previousPreviousVisit ? (
-                            <Link
+                            <UiLink
                                 href={`/patients/${patient.id}/timeline/visit-${sourceId}-${previousPreviousVisit.date}`}
                                 className="w-[16rem] shrink-0 opacity-20 grayscale-[0.8] bg-card/30 hover:opacity-80 hover:grayscale-0 transition-all cursor-pointer block"
                             >
@@ -139,7 +141,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                                     onPreviewImage={() => { }}
                                     valueAlign="left"
                                 />
-                            </Link>
+                            </UiLink>
                         ) : (
                             <div className="w-[16rem] shrink-0 opacity-20 pointer-events-none grayscale-[0.8] bg-card/30" />
                         )}
@@ -149,7 +151,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                 {previewImageId && (
                     <ImagePreview
                         src={visit.images.find(img => img.id === previewImageId)?.src || ""}
-                        alt="Wound Review"
+                        alt={t("gallery.wound_detail")}
                         onClose={() => setPreviewImageId(null)}
                     />
                 )}
@@ -171,8 +173,10 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
         return (
             <div className="flex h-full flex-col">
                 <div className="border-b border-border px-6 py-4 bg-card/50">
-                    <h2 className="text-sm font-semibold text-foreground">📸 Photos from {new Date(dateStr + "T00:00:00").toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</h2>
-                    <p className="mt-0.5 text-xs text-muted-foreground">{group.photos.length} clinical images</p>
+                    <h2 className="text-sm font-semibold text-foreground">
+                        📸 {t("gallery.photos_from", { date: new Date(dateStr + "T00:00:00").toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }) })}
+                    </h2>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{group.photos.length} {t("gallery.clinical_images")}</p>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
                     <PhotoGrid photos={group.photos} onPreviewPhoto={setPreviewImageId} />
@@ -180,7 +184,7 @@ export function TimelineDetail({ type, sourceId, patient, dateStr }: TimelineDet
                 {previewImageId && (
                     <ImagePreview
                         src={group.photos.find(p => p.id === previewImageId)?.src || ""}
-                        alt="Photo Preview"
+                        alt={t("gallery.photo")}
                         onClose={() => setPreviewImageId(null)}
                     />
                 )}

@@ -1,8 +1,9 @@
 "use client"
 
 import { Image as ImageIcon } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/lib/utils"
-import Link from "next/link"
+import { UiLink } from "@/components/common/ui-link"
 
 export interface TimelineEvent {
     id: string
@@ -23,6 +24,8 @@ export function TimelineList({
     selectedEventId?: string,
     patientId: string
 }) {
+    const { t, i18n } = useTranslation()
+
     const getDayDiff = (d1: Date, d2: Date) => {
         const diffTime = Math.abs(d1.getTime() - d2.getTime());
         return Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -33,10 +36,10 @@ export function TimelineList({
             <div className="border-b border-border px-6 py-4 shrink-0">
                 <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
                     <span className="text-base leading-none">🗓️</span>
-                    Timeline
+                    {t("common.timeline")}
                 </h2>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                    Chronological patient history
+                    {t("gallery.chronological_history")}
                 </p>
             </div>
 
@@ -67,7 +70,7 @@ export function TimelineList({
                                             <div className="ml-[3rem] h-px w-2 bg-amber-400/40" />
                                             {dayDiff > 1 && (
                                                 <span className="text-[13px] leading-[10px] uppercase tracking-widest text-amber-500/90 italic">
-                                                    {dayDiff} days earlier
+                                                    {t("gallery.day_ago", { count: dayDiff })}
                                                 </span>
                                             )}
                                             <div className="h-px flex-1 bg-amber-400/40" />
@@ -85,13 +88,13 @@ export function TimelineList({
                                             <div className="mb-2 flex items-center gap-2">
                                                 <div className="ml-[3rem] h-px w-2 bg-amber-400/40" />
                                                 <span className="text-[13px] leading-[10px] uppercase tracking-widest text-amber-500/90 italic">
-                                                    {dayDiff} days earlier
+                                                    {t("gallery.day_ago", { count: dayDiff })}
                                                 </span>
                                             </div>
                                         )
                                     )}
 
-                                    <Link
+                                    <UiLink
                                         href={`/patients/${patientId}/timeline/${event.id}`}
                                         className="flex group"
                                     >
@@ -99,12 +102,12 @@ export function TimelineList({
                                             {showDate && (
                                                 <>
                                                     <span className="text-[10px] leading-[10px] font-bold text-amber-500/60 uppercase tracking-tighter mb-0.5">
-                                                        {new Date(event.dateStr).toLocaleDateString('en-US', { weekday: 'long' })}
+                                                        {new Date(event.dateStr).toLocaleDateString(i18n.language, { weekday: 'long' })}
                                                     </span>
                                                     <span className="text-[13px] leading-[10px] font-bold text-amber-500/80 uppercase tracking-tighter">
-                                                        {new Date(event.dateStr).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+                                                        {new Date(event.dateStr).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })}
                                                     </span>
-                                                    <span className="text-[10px] leading-[10px] font-bold text-amber-500/40 uppercase tracking-tighter mt-0.5">
+                                                    <span className="text-[10px] leading-[10px] font-bold text-amber-500/40 uppercase tracking-tighter mt-0.5" title={event.dateStr}>
                                                         {new Date(event.dateStr).getFullYear()}
                                                     </span>
                                                 </>
@@ -137,7 +140,7 @@ export function TimelineList({
                                                                 <div className="flex items-center gap-1">
                                                                     <ImageIcon className="h-3 w-3 shrink-0 opacity-70" />
                                                                     <span>
-                                                                        {event.description.replace(/(\d+)\s+photos(\s+taken)?/, '$1')}
+                                                                        {event.description.replace(/(\d+)\s+(photos|fotografií|fotografie)(\s+taken)?/, '$1')}
                                                                     </span>
                                                                 </div>
                                                             ) : event.description}
@@ -146,7 +149,7 @@ export function TimelineList({
                                                 </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </UiLink>
                                 </div>
                             )
                         })}

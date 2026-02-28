@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { UiLink } from "@/components/common/ui-link"
 import { cn } from "@/lib/utils"
 import { statusColor } from "./constants"
 
@@ -74,9 +74,9 @@ export function PanelListItem({
     if (href) {
         return (
             <div className="relative">
-                <Link href={href} className={className}>
+                <UiLink href={href} className={className}>
                     {content}
-                </Link>
+                </UiLink>
             </div>
         )
     }

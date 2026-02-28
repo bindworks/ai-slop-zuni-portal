@@ -1,4 +1,4 @@
-import Image from "next/image"
+import { UiImage } from "@/components/common/ui-image"
 import { Check, Eye } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { VisitImage } from "../common/types"
@@ -32,7 +32,7 @@ export function ImageThumb({
                 )}
             >
                 <div className="relative aspect-square overflow-hidden bg-muted">
-                    <Image
+                    <UiImage
                         src={img.src}
                         alt={img.tag}
                         fill

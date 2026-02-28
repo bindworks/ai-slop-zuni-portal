@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import { X, ZoomIn, ZoomOut, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react"
-import Image from "next/image"
+import { UiImage } from "@/components/common/ui-image"
 import { cn } from "@/lib/utils"
+import { useTranslation } from "react-i18next"
 
 interface ImagePreviewProps {
     src: string
@@ -14,6 +15,7 @@ interface ImagePreviewProps {
 }
 
 export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreviewProps) {
+    const { t } = useTranslation()
     const [scale, setScale] = useState(1)
     const [offset, setOffset] = useState({ x: 0, y: 0 })
     const [isDragging, setIsDragging] = useState(false)
@@ -78,7 +80,7 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
                 <div className="flex items-center gap-4">
                     <h2 className="text-sm font-semibold text-foreground">{alt}</h2>
                     <div className="flex items-center gap-2 rounded-full bg-secondary/50 px-3 py-1 text-[11px] font-medium text-muted-foreground">
-                        <span className="text-foreground">Zoom:</span> {Math.round(scale * 100)}%
+                        <span className="text-foreground">{t("gallery.zoom")}:</span> {Math.round(scale * 100)}%
                     </div>
                 </div>
 
@@ -86,21 +88,21 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
                     <button
                         onClick={() => setScale((s) => Math.min(s + 0.5, 5))}
                         className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary/50 text-foreground transition-all hover:bg-secondary"
-                        title="Zoom In"
+                        title={t("gallery.zoom_in")}
                     >
                         <ZoomIn className="h-4 w-4" />
                     </button>
                     <button
                         onClick={() => setScale((s) => Math.max(s - 0.5, 0.5))}
                         className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary/50 text-foreground transition-all hover:bg-secondary"
-                        title="Zoom Out"
+                        title={t("gallery.zoom_out")}
                     >
                         <ZoomOut className="h-4 w-4" />
                     </button>
                     <button
                         onClick={resetZoom}
                         className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary/50 text-foreground transition-all hover:bg-secondary"
-                        title="Reset"
+                        title={t("gallery.reset")}
                     >
                         <RotateCcw className="h-4 w-4" />
                     </button>
@@ -108,7 +110,7 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
                     <button
                         onClick={onClose}
                         className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all hover:bg-primary/90 shadow-lg shadow-primary/20"
-                        title="Close"
+                        title={t("gallery.close")}
                     >
                         <X className="h-4 w-4" />
                     </button>
@@ -132,7 +134,7 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
                     }}
                 >
                     <div className="relative aspect-square h-[80vh] w-auto overflow-hidden rounded-2xl border border-border/50 bg-black shadow-2xl">
-                        <Image
+                        <UiImage
                             src={src}
                             alt={alt}
                             fill
@@ -164,7 +166,7 @@ export function ImagePreview({ src, alt, onClose, onNext, onPrev }: ImagePreview
 
             {/* Footer Info */}
             <div className="flex h-12 items-center justify-center border-t border-border/50 bg-background/50 px-6 backdrop-blur-xl text-[12px] text-muted-foreground">
-                <p>Use mouse wheel to zoom &bull; Drag to pan &bull; Arrow keys to navigate</p>
+                <p>{t("gallery.zoom_instructions")}</p>
             </div>
         </div>
     )

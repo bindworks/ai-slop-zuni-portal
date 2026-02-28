@@ -17,18 +17,18 @@ export const statusColor: Record<string, string> = {
 }
 
 export const scanImages = [
-    "/doc-scan-clinical.png",
-    "/doc-scan-lab.png",
-    "/doc-scan-radiology.png",
-    "/doc-scan-consent.png",
-    "/doc-scan-letter.png",
+    "/assets/doc-scan-clinical.png",
+    "/assets/doc-scan-lab.png",
+    "/assets/doc-scan-radiology.png",
+    "/assets/doc-scan-consent.png",
+    "/assets/doc-scan-letter.png",
 ]
 
 export const photoPool = [
-    "/photo-patient-room.png",
-    "/photo-wound-dressing.png",
-    "/photo-medical-supplies.png",
-    "/photo-compression-sock.png",
-    "/photo-hospital-corridor.png",
-    "/photo-physio-exercise.png",
+    "/assets/photo-patient-room.png",
+    "/assets/photo-wound-dressing.png",
+    "/assets/photo-medical-supplies.png",
+    "/assets/photo-compression-sock.png",
+    "/assets/photo-hospital-corridor.png",
+    "/assets/photo-physio-exercise.png",
 ]

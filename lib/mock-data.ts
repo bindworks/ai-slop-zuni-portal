@@ -44,9 +44,9 @@ const tissueTypes = [
 
 // --- Wound Images (Now with Rulers) ---
 const woundImages = [
-    "/wound-1.jpg",
-    "/wound-2.jpg",
-    "/wound-3.jpg",
+    "/assets/wound-1.jpg",
+    "/assets/wound-2.jpg",
+    "/assets/wound-3.jpg",
 ];
 
 // --- Hierarchical Areas ---

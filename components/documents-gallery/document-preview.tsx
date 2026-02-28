@@ -3,6 +3,8 @@
 import { useEffect } from "react"
 import { X, ExternalLink, Calendar, Camera, Building2, UserRound } from "lucide-react"
 import { Document } from "../common/types"
+import { UiLink } from "@/components/common/ui-link"
+import { prefixPath } from "@/lib/prefix-path"
 
 interface DocumentPreviewProps {
     doc: Document
@@ -25,7 +27,7 @@ export function DocumentPreview({ doc, onClose }: DocumentPreviewProps) {
                 <h2 className="text-sm font-semibold text-foreground truncate mr-4">{doc.title}</h2>
                 <div className="flex items-center gap-3">
                     {doc.url && (
-                        <a
+                        <UiLink
                             href={doc.url}
                             target="_blank"
                             rel="noreferrer"
@@ -33,7 +35,7 @@ export function DocumentPreview({ doc, onClose }: DocumentPreviewProps) {
                             title="Open in new tab"
                         >
                             <ExternalLink className="h-4 w-4" /> Open
-                        </a>
+                        </UiLink>
                     )}
                     <button
                         onClick={onClose}
@@ -67,7 +69,7 @@ export function DocumentPreview({ doc, onClose }: DocumentPreviewProps) {
                 <div className="flex flex-1 items-center justify-center overflow-hidden p-6 md:p-12">
                     <div className="h-full w-full max-w-5xl overflow-hidden rounded-xl border border-border/50 bg-white shadow-2xl">
                         <iframe
-                            src={`${doc.url}#view=FitH`}
+                            src={`${prefixPath(doc.url)}#view=FitH`}
                             className="h-full w-full border-0"
                             title={doc.title}
                         />

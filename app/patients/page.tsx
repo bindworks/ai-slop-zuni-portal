@@ -3,12 +3,13 @@
 import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Search, User, Activity, Filter, ChevronRight } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { cn } from "@/lib/utils"
 import { mockPatients } from "@/lib/mock-data"
-import { Patient } from "@/components/common/types"
 import { MainHeader } from "@/components/common/main-header"
 
 export default function PatientListPage() {
+    const { t } = useTranslation()
     const router = useRouter()
     const [searchQuery, setSearchQuery] = useState("")
     const [filter, setFilter] = useState<"all" | "recent">("all")
@@ -45,8 +46,8 @@ export default function PatientListPage() {
                 <div className="mx-auto w-full max-w-6xl flex flex-col flex-1 overflow-hidden">
                     <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Patient Dashboard</h1>
-                            <p className="mt-1.5 text-muted-foreground italic">Manage patient records and clinical documentation</p>
+                            <h1 className="text-3xl font-bold tracking-tight">{t("patient.dashboard")}</h1>
+                            <p className="mt-1.5 text-muted-foreground italic">{t("patient.manage_records")}</p>
                         </div>
 
                         <div className="flex items-center gap-3">
@@ -55,18 +56,18 @@ export default function PatientListPage() {
                                     onClick={() => setFilter("all")}
                                     className={cn("px-4 py-1.5 text-sm font-medium rounded-md transition-all", filter === "all" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground")}
                                 >
-                                    All Patients
+                                    {t("common.patients")}
                                 </button>
                                 <button
                                     onClick={() => setFilter("recent")}
                                     className={cn("px-4 py-1.5 text-sm font-medium rounded-md transition-all", filter === "recent" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground")}
                                 >
-                                    Last Month
+                                    {t("common.last_month")}
                                 </button>
                             </div>
                             <button className="flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all">
                                 <User className="h-4 w-4" />
-                                New Patient
+                                {t("common.new_patient")}
                             </button>
                         </div>
                     </div>
@@ -77,7 +78,7 @@ export default function PatientListPage() {
                             <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <input
                                 type="text"
-                                placeholder="Search by patient name or ID..."
+                                placeholder={t("common.search")}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="h-12 w-full rounded-xl border border-border bg-card/50 pl-11 pr-4 text-sm focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all"
@@ -85,7 +86,7 @@ export default function PatientListPage() {
                         </div>
                         <div className="flex items-center justify-center gap-2 rounded-xl border border-border bg-card/50 px-4 text-sm text-muted-foreground">
                             <Filter className="h-4 w-4" />
-                            <span>Sort by: <b>Last Visit</b></span>
+                            <span>{t("common.sort_by")}: <b>{t("common.last_visit")}</b></span>
                         </div>
                     </div>
 
@@ -94,12 +95,12 @@ export default function PatientListPage() {
                         <table className="w-full text-sm">
                             <thead className="sticky top-0 z-10">
                                 <tr className="border-b border-border bg-secondary/80">
-                                    <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Patient</th>
-                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">MRN</th>
-                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Age</th>
-                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Wounds</th>
-                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Last Visit</th>
-                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</th>
+                                    <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("wound.label")}</th>
+                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("patient.mrn")}</th>
+                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("patient.age")}</th>
+                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("patient.wounds")}</th>
+                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("common.last_visit")}</th>
+                                    <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{t("patient.status")}</th>
                                     <th className="px-4 py-3" />
                                 </tr>
                             </thead>
@@ -119,9 +120,9 @@ export default function PatientListPage() {
                                             </div>
                                         </td>
                                         <td className="px-3 py-2 text-xs font-mono text-muted-foreground">{patient.mrn}</td>
-                                        <td className="px-3 py-2 text-muted-foreground">{patient.age}y</td>
+                                        <td className="px-3 py-2 text-muted-foreground">{patient.age}{t("patient.age_unit")}</td>
                                         <td className="px-3 py-2">
-                                            <span className="inline-flex items-center gap-1.5 text-xs">❤️‍🩹 {patient.woundCount}</span>
+                                            <span className="inline-flex items-center gap-1.5 text-xs">❤️‍🩹 {t("plural.wound", { count: patient.woundCount })}</span>
                                         </td>
                                         <td className="px-3 py-2 text-xs text-muted-foreground">{patient.lastVisit}</td>
                                         <td className="px-3 py-2">
@@ -131,7 +132,7 @@ export default function PatientListPage() {
                                                     patient.status === "Worsening" ? "bg-rose-500/10 text-rose-500 border border-rose-500/20" :
                                                         "bg-amber-500/10 text-amber-500 border border-amber-500/20"
                                             )}>
-                                                {patient.status}
+                                                {t(`patient.status_${patient.status.toLowerCase()}`)}
                                             </span>
                                         </td>
                                         <td className="px-3 py-2 text-right">
@@ -148,8 +149,8 @@ export default function PatientListPage() {
                             <div className="rounded-full bg-secondary/50 p-4 mb-4">
                                 <Search className="h-8 w-8" />
                             </div>
-                            <p className="text-lg font-medium">No patients found</p>
-                            <p className="text-sm">Try adjusting your search or filters</p>
+                            <p className="text-lg font-medium">{t("common.no_patients")}</p>
+                            <p className="text-sm">{t("common.try_adjusting")}</p>
                         </div>
                     )}
                 </div>

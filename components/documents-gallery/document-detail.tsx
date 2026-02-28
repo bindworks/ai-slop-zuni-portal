@@ -2,6 +2,8 @@
 
 import { ExternalLink, Calendar, Camera, Building2, UserRound } from "lucide-react"
 import { Document } from "../common/types"
+import { UiLink } from "@/components/common/ui-link"
+import { prefixPath } from "@/lib/prefix-path"
 
 interface DocumentDetailProps {
     doc: Document
@@ -14,14 +16,14 @@ export function DocumentDetail({ doc }: DocumentDetailProps) {
             <div className="flex shrink-0 items-center justify-between border-b border-border bg-card/50 px-6 py-3 backdrop-blur-sm">
                 <h2 className="text-sm font-semibold text-foreground truncate mr-4">{doc.title}</h2>
                 {doc.url && (
-                    <a
+                    <UiLink
                         href={doc.url}
                         target="_blank"
                         rel="noreferrer"
                         className="flex h-8 items-center gap-2 rounded-lg bg-secondary/50 px-3 text-[11px] font-medium text-foreground transition-all hover:bg-secondary shrink-0"
                     >
                         <ExternalLink className="h-3.5 w-3.5" /> Open
-                    </a>
+                    </UiLink>
                 )}
             </div>
 
@@ -47,7 +49,7 @@ export function DocumentDetail({ doc }: DocumentDetailProps) {
                 <div className="flex-1 overflow-hidden p-6">
                     <div className="h-full w-full overflow-hidden rounded-xl border border-border/50 bg-white shadow-sm transition-all hover:shadow-md">
                         <iframe
-                            src={`${doc.url}#view=FitH`}
+                            src={`${prefixPath(doc.url)}#view=FitH`}
                             className="h-full w-full border-0"
                             title={doc.title}
                         />
